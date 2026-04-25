@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { sendMagicLink } from "@/lib/email"
+import { sendMagicLinkEmail } from "@/lib/email"
 
 export default function MagicLinkPage() {
   const router = useRouter()
@@ -18,7 +18,7 @@ export default function MagicLinkPage() {
     setLoading(true)
     setError("")
 
-    const result = await sendMagicLink(email)
+    const result = await sendMagicLinkEmail(email)
     
     if (result.error) {
       setError(result.error)

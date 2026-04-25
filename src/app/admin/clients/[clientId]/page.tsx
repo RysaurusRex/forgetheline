@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams } from "next/navigation"
-import { getClientById } from "../actions"
+import { getClientById } from "./actions"
 
 interface ClientData {
   id: string
