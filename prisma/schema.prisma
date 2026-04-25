@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum Tool {
+  RESUME_ANALYZER
+  INTERVIEW_SIMULATOR
+  DISQUALIFIER_SCANNER
+  STRATEGY_ENGINE
+  FITNESS
+  TESTING
+  OTHER
+}
+
+enum EntryStatus {
+  DRAFT
+  SAVED
+}
+
+enum PurchaseTier {
+  PORTAL_149
+  PORTAL_CREDIT_199
+  COACHING_ONLY
+  OTHER
+}
+
+enum AccessStatus {
+  ACTIVE
+  PAUSED
+}
+
+enum Plan {
+  PORTAL_149
+  PORTAL_CREDIT_199
+}
+
+enum VerificationType {
+  MAGIC_LINK
+  PASSWORD_RESET
+  EMAIL_VERIFY
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name         String?
+  password     String?
+  emailVerified Boolean  @default(false)
+  role         Role      @default(CLIENT)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  verifications Verification[]
+  clientProfile ClientProfile?
+  clientAccess  ClientAccess?
+  dashboard    Dashboard?
+  toolOutputs  ToolOutput[]
+  resultsLog   ResultsLogEntry[]
+  forumPosts   ForumPost[]
+  forumComments ForumComment[]
+}
+
+model Verification {
+  id        String           @id @default(cuid())
+  userId    String
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token    String          @unique
+  type     VerificationType
+  expires  DateTime
+  used     Boolean         @default(false)
+  createdAt DateTime      @default(now())
+}
+
+model ClientProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targetRoles        String?
+  agencies           String?
+  locationConstraints String?
+  hiringStage        String?
+  timelineTargetDate String?
+  interviewDate     DateTime?
+  strengths         String?
+  weakPoints        String?
+  riskFlags         String?
+  resumeLinkOrNotes String?
+  jobPostingLink    String?
+  notes            String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Dashboard {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  currentStatus  String?  @db.Text
+  latestOutputs  String?  @db.Text
+  executionLoop  String?  @db.Text
+  targetInfo      String?  @db.Text
+  progressChecks  String?  @db.Text
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ToolOutput {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tool      Tool
+  output   String?  @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, tool])
+}
+
+model ResultsLogEntry {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entryTitle String
+  date       DateTime
+  tool       Tool
+  score      Float?
+  status     EntryStatus @default(SAVED)
+  notes      String?     @db.Text
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model ClientAccess {
+  id                String       @id @default(cuid())
+  userId            String       @unique
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status           AccessStatus @default(ACTIVE)
+  plan             Plan?
+  coachingCreditCents Int      @default(0)
+  creditBalanceCents  Int       @default(0)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model SalesCreditTracker {
+  id                   String       @id @default(cuid())
+  name                 String
+  email                String
+  purchaseTier         PurchaseTier
+  creditBalanceCents   Int          @default(0)
+  redeemed             Boolean      @default(false)
+  dateRedeemed         DateTime?
+  notes                String?      @db.Text
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime     @updatedAt
+}
+
+model ForumPost {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  content   String   @db.Text
+  category  String
+  pinned    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comments  ForumComment[]
+}
+
+model ForumComment {
+  id        String   @id @default(cuid())
+  postId    String
+  post     ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content  String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

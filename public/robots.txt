@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and private pages
+Disallow: /app/admin/
+Disallow: /app/dashboard/
+Disallow: /api/
+
+Sitemap: https://forgetheline.com/sitemap.xml
