@@ -22,12 +22,14 @@ export default function ContactPage() {
     setError("")
     
     const formData = new FormData(e.currentTarget)
-    const name = formData.get("name") as string
+    const firstName = formData.get("firstName") as string
+    const lastName = formData.get("lastName") as string
+    const name = `${firstName} ${lastName}`.trim()
     const email = formData.get("email") as string
     const message = formData.get("message") as string
     const subject = formData.get("subject") as string
 
-    if (!name || !email || !message) {
+    if (!firstName || !email || !message) {
       setError("Please fill in your name, email, and message")
       setLoading(false)
       return
