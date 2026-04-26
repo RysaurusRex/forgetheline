@@ -25,9 +25,10 @@ export default function ContactPage() {
     const name = formData.get("name") as string
     const email = formData.get("email") as string
     const message = formData.get("message") as string
+    const subject = formData.get("subject") as string
 
     if (!name || !email || !message) {
-      setError("All fields are required")
+      setError("Please fill in your name, email, and message")
       setLoading(false)
       return
     }
@@ -36,14 +37,17 @@ export default function ContactPage() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, subject }),
       })
 
-      if (!res.ok) throw new Error("Failed to send")
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || "Failed to send")
+      }
 
       setSubmitted(true)
-    } catch (err) {
-      setError("Something went wrong. Please try again or email us directly.")
+    } catch (err: any) {
+      setError(err.message || "Something went wrong. Please try again or email us directly.")
     }
     
     setLoading(false)
