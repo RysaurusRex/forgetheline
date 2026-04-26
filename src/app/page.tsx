@@ -77,6 +77,9 @@ export default function LandingPage() {
             <Link href="/how-it-works" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
               How It Works
             </Link>
+            <Link href="/free-guide" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
+              Free Guide
+            </Link>
             <Link href="/faq" className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">
               FAQ
             </Link>
@@ -223,10 +226,15 @@ export default function LandingPage() {
           <p className="mt-4 text-blue-100 text-lg">
             Join hundreds of candidates who have successfully prepared for law enforcement careers.
           </p>
-          <div className="mt-10">
+          <div className="mt-10 flex gap-4 justify-center flex-wrap">
             <Link href="/pricing">
               <Button size="lg" className="bg-white text-blue-700 hover:bg-blue-50 shadow-xl px-10 text-base">
                 View Pricing
+              </Button>
+            </Link>
+            <Link href="/free-guide">
+              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10 px-10 text-base">
+                Get Free Guide
               </Button>
             </Link>
           </div>
