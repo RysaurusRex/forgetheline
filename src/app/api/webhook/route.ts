@@ -2,10 +2,13 @@ import Stripe from "stripe"
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { hash } from "bcryptjs"
+import { Resend } from "resend"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", { 
   apiVersion: "2025-04-30.basil" 
 })
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 const PORTAL_PRICE_ID = "price_149"
 const CREDIT_PRICE_ID = "price_199"
@@ -97,6 +100,29 @@ export async function POST(request: NextRequest) {
             notes: `Stripe session: ${session.id}`,
           },
         })
+
+        // Send welcome email
+        if (resend) {
+          await resend.emails.send({
+            from: "Forge the Line <onboarding@resend.dev>",
+            to: customerEmail,
+            subject: "Welcome to Forge the Line!",
+            html: `
+              <h1>Welcome to Forge the Line!</h1>
+              <p>Hi ${user.name || "there"},</p>
+              <p>Thank you for joining! You now have access to:</p>
+              <ul>
+                ${plan === "PORTAL_149" ? "<li>Portal access</li>" : "<li>Portal + $50/mo coaching credit</li>"}
+              </ul>
+              <p><strong>Your login:</strong><br/>${customerEmail}</p>
+              <p><strong>Temporary password:</strong> Set when you first log in</p>
+              <p>Login here: <a href="https://forgetheline.us.com/login">https://forgetheline.us.com/login</a></p>
+              <hr/>
+              <p>P.S. The law enforcement hiring process is always changing - if you hear about any updates or changes, let us know!</p>
+              <p>Best,<br/>Forge the Line</p>
+            `,
+          })
+        }
       }
     }
 
