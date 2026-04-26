@@ -117,8 +117,8 @@ export default function PricingPage() {
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold mb-4">
-                  {plan.price}<span className="text-lg font-normal">{plan.period}</span>
+                <div className="text-5xl font-bold mb-4">
+                  {plan.price}<span className="text-xl font-normal">{plan.period}</span>
                 </div>
                 <ul className="space-y-2">
                   {plan.features.map((feature) => (
@@ -143,7 +143,7 @@ export default function PricingPage() {
               </CardContent>
               <CardFooter>
                 <Button 
-                  className="w-full" 
+                  className="w-full text-lg py-6" 
                   variant={plan.highlight ? "default" : "outline"}
                   onClick={() => handleBuy(plan.link)}
                 >
