@@ -108,7 +108,7 @@ export default function ContactPage() {
         <div className="container mx-auto max-w-6xl">
           <h1 className="text-4xl font-bold text-center mb-4">Contact Us</h1>
           <p className="text-muted-foreground text-center mb-12">
-            Have questions? We'd love to hear from you.
+            Have questions? We'd love to hear from you. The law enforcement profession and hiring is always changing - if you have an idea to make this site better or know of a major change in hiring, let us know!
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
