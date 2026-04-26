@@ -14,7 +14,7 @@ const SUB_PRO_LINK = "https://buy.stripe.com/9B6bJ14hi7xQ7kkdW17g404"
 const subscriptionPlans = [
   {
     name: "Basic",
-    price: "$19",
+    price: "$19.99",
     period: "/month",
     link: SUB_BASIC_LINK,
     description: "Portal access",
@@ -30,7 +30,7 @@ const subscriptionPlans = [
   },
   {
     name: "Plus",
-    price: "$29",
+    price: "$29.99",
     period: "/month",
     link: SUB_PLUS_LINK,
     description: "Portal + credit",
@@ -45,7 +45,7 @@ const subscriptionPlans = [
   },
   {
     name: "Pro",
-    price: "$49",
+    price: "$49.99",
     period: "/month",
     link: SUB_PRO_LINK,
     description: "Full access",
