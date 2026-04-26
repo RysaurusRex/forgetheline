@@ -21,7 +21,7 @@ export default function ClientViewPage() {
 
   useEffect(() => {
     getClientById(params.clientId as string).then((data) => {
-      setClient(data as ClientData)
+      setClient(data as unknown as ClientData)
       setLoading(false)
     })
   }, [params.clientId])

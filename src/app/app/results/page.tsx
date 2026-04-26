@@ -54,7 +54,7 @@ export default function ResultsPage() {
 
   const loadEntries = async () => {
     const data = await getResultsLog()
-    setEntries(data as ResultEntry[])
+    setEntries(data as unknown as ResultEntry[])
     setLoading(false)
   }
 

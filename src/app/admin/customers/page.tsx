@@ -44,7 +44,7 @@ export default function CustomersPage() {
 
   const loadCustomers = async () => {
     const data = await getSalesCustomers()
-    setCustomers(data as SalesCustomer[])
+    setCustomers(data as unknown as SalesCustomer[])
     setLoading(false)
   }
 
