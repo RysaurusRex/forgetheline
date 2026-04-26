@@ -1,7 +1,5 @@
 "use client"
 
-export const dynamic = 'force-dynamic'
-
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -11,25 +9,28 @@ import { Label } from "@/components/ui/label"
 import { Mail, CheckCircle } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 
+export const dynamic = 'force-dynamic'
+
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "",
+    message: ""
+  })
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
     
-    const formData = new FormData(e.currentTarget)
-    const firstName = (formData.get("firstName") as string) || ""
-    const lastName = (formData.get("lastName") as string) || ""
-    const email = (formData.get("email") as string) || ""
-    const message = (formData.get("message") as string) || ""
-    const subject = (formData.get("subject") as string) || ""
-
-    console.log("Form data:", { firstName, lastName, email, message, subject })
-
+    const { firstName, lastName, email, subject, message } = form
+    
     if (!firstName || !lastName || !email || !message) {
       setError("Please fill in all required fields")
       setLoading(false)
@@ -52,10 +53,14 @@ export default function ContactPage() {
 
       setSubmitted(true)
     } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again or email us directly.")
+      setError(err.message || "Something went wrong. Please try again.")
     }
     
     setLoading(false)
+  }
+
+  const updateField = (field: string, value: string) => {
+    setForm(prev => ({ ...prev, [field]: value }))
   }
 
   if (submitted) {
@@ -64,23 +69,16 @@ export default function ContactPage() {
         <header className="border-b bg-card">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
             <a href="/" className="text-xl font-bold">Forge the Line</a>
-            <div className="flex items-center gap-4">
-              <ThemeToggle />
-              <nav className="flex items-center gap-4">
-                <a href="/" className="text-sm text-muted-foreground hover:text-foreground">Home</a>
-                <a href="/pricing" className="text-sm text-muted-foreground hover:text-foreground">Pricing</a>
-              </nav>
-            </div>
+            <ThemeToggle />
           </div>
         </header>
-
         <main className="flex-1 flex items-center justify-center py-12 px-4">
           <Card className="w-full max-w-md">
             <CardContent className="pt-6 text-center">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
               <p className="text-muted-foreground mb-4">
-                Thank you for reaching out. We'll get back to you within 24-48 hours.
+                Thank you! We'll be in touch within 24-48 hours.
               </p>
               <a href="/">
                 <Button>Back to Home</Button>
@@ -88,75 +86,37 @@ export default function ContactPage() {
             </CardContent>
           </Card>
         </main>
-
-        <footer className="border-t py-6 px-4">
-          <div className="container mx-auto text-center text-sm text-muted-foreground">
-            © 2025 Forge the Line
-          </div>
-        </footer>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen flex flex-col">
-<header className="border-b bg-card">
-          <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <a href="/" className="text-xl font-bold">Forge the Line</a>
-            <div className="flex items-center gap-4">
-              <ThemeToggle />
-              <nav className="flex items-center gap-4">
-                <a href="/" className="text-sm text-muted-foreground hover:text-foreground">Home</a>
-                <a href="/pricing" className="text-sm text-muted-foreground hover:text-foreground">Pricing</a>
-              </nav>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 py-12 px-4">
+      <header className="border-b bg-card">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+          <a href="/" className="text-xl font-bold">Forge the Line</a>
+          <ThemeToggle />
+        </div>
+      </header>
+      <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <h1 className="text-4xl font-bold text-center mb-4">Contact Us</h1>
           <p className="text-muted-foreground text-center mb-12">
-            Have questions? We'd love to hear from you. The law enforcement profession and hiring is always changing - if you have an idea to make this site better or know of a major change in hiring, let us know!
+            Have questions? The law enforcement profession and hiring is always changing - if you have an idea to make this site better or know of a major change in hiring, let us know!
           </p>
-
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Contact Info */}
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Get in Touch</CardTitle>
-                  <CardDescription>
-                    We're here to help with any questions about Forge the Line.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                      <div className="font-medium">Email</div>
-                      <a href="mailto:forgetheline@gmail.com" className="text-sm text-muted-foreground hover:text-primary">
-                        forgetheline@gmail.com
-                      </a>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Common Questions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm text-muted-foreground">
-                  <p>• How do the tools work?</p>
-                  <p>• What payment methods do you accept?</p>
-                  <p>• How long do I have access?</p>
-                  <p>• Can I get a refund?</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Contact Form */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Get in Touch</CardTitle>
+                <CardDescription>We're here to help.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-muted-foreground" />
+                  <a href="mailto:forgetheline@gmail.com">forgetheline@gmail.com</a>
+                </div>
+              </CardContent>
+            </Card>
             <Card>
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
@@ -165,34 +125,53 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">First name</Label>
-                      <Input id="firstName" placeholder="John" required />
+                      <Label>First name *</Label>
+                      <Input 
+                        value={form.firstName}
+                        onChange={(e) => updateField("firstName", e.target.value)}
+                        placeholder="John"
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Last name</Label>
-                      <Input id="lastName" placeholder="Doe" required />
+                      <Label>Last name *</Label>
+                      <Input 
+                        value={form.lastName}
+                        onChange={(e) => updateField("lastName", e.target.value)}
+                        placeholder="Doe"
+                        required 
+                      />
                     </div>
                   </div>
-                  
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="john@example.com" required />
+                    <Label>Email *</Label>
+                    <Input 
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => updateField("email", e.target.value)}
+                      placeholder="john@example.com"
+                      required 
+                    />
                   </div>
-                  
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" placeholder="Question about pricing..." required />
+                    <Label>Subject</Label>
+                    <Input 
+                      value={form.subject}
+                      onChange={(e) => updateField("subject", e.target.value)}
+                      placeholder="Question about..."
+                    />
                   </div>
-                  
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea id="message" placeholder="How can we help?" rows={5} required />
+                    <Label>Message *</Label>
+                    <Textarea 
+                      value={form.message}
+                      onChange={(e) => updateField("message", e.target.value)}
+                      placeholder="How can we help?"
+                      rows={5}
+                      required 
+                    />
                   </div>
-
-                  {error && (
-                    <p className="text-sm text-red-500">{error}</p>
-                  )}
-
+                  {error && <p className="text-sm text-red-500">{error}</p>}
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? "Sending..." : "Send Message"}
                   </Button>
@@ -202,7 +181,6 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-
       <footer className="border-t py-6 px-4">
         <div className="container mx-auto text-center text-sm text-muted-foreground">
           © 2025 Forge the Line
