@@ -1,12 +1,6 @@
-import { NextApiHandler } from "next"
 import NextAuth from "next-auth"
 import { authOptions } from "@/lib/auth"
 
-const authHandler: NextApiHandler = (req, res) => {
-  return NextAuth(req, res, authOptions)
-}
+const handler = NextAuth(authOptions)
 
-export default authHandler
-
-export const GET = authHandler
-export const POST = authHandler
+export { handler as GET, handler as POST }
