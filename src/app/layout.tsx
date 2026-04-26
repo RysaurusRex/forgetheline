@@ -1,3 +1,5 @@
+"use client"
+
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
@@ -15,27 +17,7 @@ export const metadata: Metadata = {
     default: "Forge the Line - Law Enforcement Hiring Prep",
     template: "%s | Forge the Line",
   },
-  description: "Private client portal for law enforcement hiring preparation. Tools for resume, interview, background check, and strategy to help you get hired.",
-  keywords: ["law enforcement", "police", "hiring", "resume", "interview prep", "federal", "FBI", "DEA", "career"],
-  authors: [{ name: "Forge the Line" }],
-  creator: "Forge the Line",
-  publisher: "Forge the Line",
-  openGraph: {
-    title: "Forge the Line - Law Enforcement Hiring Prep",
-    description: "Prepare for law enforcement careers with tools for resume, interview, background check, and strategy.",
-    url: "https://forgetheline.com",
-    siteName: "Forge the Line",
-    locale: "en_US",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
-  },
+  description: "Private client portal for law enforcement hiring preparation.",
 }
 
 export default function RootLayout({
