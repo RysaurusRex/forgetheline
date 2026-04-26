@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 export default function FreeGuidePage() {
@@ -11,14 +10,18 @@ export default function FreeGuidePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email || !email.includes("@")) return
+    if (!email || !email.includes("@")) {
+      alert("Please enter a valid email")
+      return
+    }
 
     setLoading(true)
 
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
-        body: new URLSearchParams({ email }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ email }).toString(),
       })
 
       if (res.ok) {
@@ -27,6 +30,7 @@ export default function FreeGuidePage() {
         alert("Something went wrong. Please try again.")
       }
     } catch (err) {
+      console.error(err)
       alert("Something went wrong. Please try again.")
     }
 
@@ -103,12 +107,12 @@ export default function FreeGuidePage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
-            className="w-full px-6 py-4 text-lg rounded-xl border bg-background disabled:opacity50"
+            className="w-full px-6 py-4 text-lg rounded-xl border bg-background disabled:opacity-50"
           />
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl text-lg font-bold hover:bg-primary/90 disabled:opacity50"
+            className="w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl text-lg font-bold hover:bg-primary/90 disabled:opacity-50"
           >
             {loading ? "Processing..." : "Get Free Guide"}
           </button>
