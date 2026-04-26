@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { sendMagicLinkEmail } from "@/lib/email"
 
-export default function MagicLinkPage() {
+function MagicLinkForm() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
@@ -82,5 +82,13 @@ export default function MagicLinkPage() {
         </form>
       </div>
     </div>
+  )
+}
+
+export default function MagicLinkPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <MagicLinkForm />
+    </Suspense>
   )
 }
