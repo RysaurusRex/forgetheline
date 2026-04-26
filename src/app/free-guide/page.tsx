@@ -1,9 +1,38 @@
-export const metadata = {
-  title: 'Free Guide: 10 Mistakes That Kill Your Police Application',
-  description: 'Download the free guide to identify and avoid the top 10 mistakes that cause law enforcement applications to fail.',
-}
+"use client"
+
+import { useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function FreeGuidePage() {
+  const [email, setEmail] = useState("")
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !email.includes("@")) return
+
+    setLoading(true)
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        body: new URLSearchParams({ email }),
+      })
+
+      if (res.ok) {
+        router.push("/free-guide-success")
+      } else {
+        alert("Something went wrong. Please try again.")
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again.")
+    }
+
+    setLoading(false)
+  }
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-2xl text-center">
@@ -65,19 +94,23 @@ export default function FreeGuidePage() {
           </ul>
         </div>
 
-        <form className="space-y-4" action="/api/subscribe" method="POST">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             name="email"
             required
             placeholder="Enter your email"
-            className="w-full px-6 py-4 text-lg rounded-xl border bg-background"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+            className="w-full px-6 py-4 text-lg rounded-xl border bg-background disabled:opacity50"
           />
           <button
             type="submit"
-            className="w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl text-lg font-bold hover:bg-primary/90"
+            disabled={loading}
+            className="w-full bg-primary text-primary-foreground py-4 px-8 rounded-xl text-lg font-bold hover:bg-primary/90 disabled:opacity50"
           >
-            Get Free Guide
+            {loading ? "Processing..." : "Get Free Guide"}
           </button>
         </form>
 
