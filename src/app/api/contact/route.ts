@@ -10,11 +10,11 @@ export async function POST(req: NextRequest) {
     const { name, email, message, subject } = await req.json()
 
     if (!name || !email || !message) {
-      return NextResponse.json({ error: "All fields are required. Please fill in your name, email, and message." }, { status: 400 })
+      console.log("Missing fields on server:", { name, email, message })
+      return NextResponse.json({ error: "All fields are required" }, { status: 400 })
     }
 
-    // Handle subject (optional, but include if provided)
-    const subjectLine = subject || "Question"
+    const subjectLine = subject || "Question from contact form"
 
     // Send notification to you
     await resend.emails.send({

@@ -22,18 +22,21 @@ export default function ContactPage() {
     setError("")
     
     const formData = new FormData(e.currentTarget)
-    const firstName = formData.get("firstName") as string
-    const lastName = formData.get("lastName") as string
-    const name = `${firstName} ${lastName}`.trim()
-    const email = formData.get("email") as string
-    const message = formData.get("message") as string
-    const subject = formData.get("subject") as string
+    const firstName = (formData.get("firstName") as string) || ""
+    const lastName = (formData.get("lastName") as string) || ""
+    const email = (formData.get("email") as string) || ""
+    const message = (formData.get("message") as string) || ""
+    const subject = (formData.get("subject") as string) || ""
 
-    if (!firstName || !email || !message) {
-      setError("Please fill in your name, email, and message")
+    console.log("Form data:", { firstName, lastName, email, message, subject })
+
+    if (!firstName || !lastName || !email || !message) {
+      setError("Please fill in all required fields")
       setLoading(false)
       return
     }
+
+    const name = `${firstName} ${lastName}`.trim()
 
     try {
       const res = await fetch("/api/contact", {
