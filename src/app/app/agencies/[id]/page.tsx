@@ -30,7 +30,7 @@ const AGENCIES: Record<string, any> = {
     process: [{ step: "1", title: "Apply" }, { step: "2", title: "Written" }, { step: "3", title: "Physical" }, { step: "4", title: "Oral" }, { step: "5", title: "Background" }, { step: "6", title: "Academy" }],
     sampleQuestions: ["Why sheriff's office?", "Can you work in a jail?", "Handle difficult people?"],
   },
-"state-police": {
+  "state-police": {
     name: "State Police",
     fullName: "State Highway Patrol (e.g., Texas DPS, CHP, FHP)",
     description: "State trooper or highway patrol positions. Each state has different requirements - this is a general example.",
@@ -276,17 +276,17 @@ function AgencyGuide() {
           </CardContent>
         </Card>
       )}
-    </div>
 
-    <div className="mt-8">
-      <Link href="/app/tools/strategy-engine">
-        <Button>
-          Get Prepped for {agency.name} <BookOpen className="ml-2 h-4 w-4" />
-        </Button>
-      </Link>
+      <div className="mt-8">
+        <Link href="/app/tools/strategy-engine">
+          <Button>
+            Get Prepped for {agency.name} <BookOpen className="ml-2 h-4 w-4" />
+          </Button>
+        </Link>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default function AgencyPage() {
   return <AgencyGuide />
