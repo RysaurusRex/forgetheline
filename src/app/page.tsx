@@ -29,13 +29,25 @@ const features = [
     icon: Lightbulb,
     color: "bg-violet-500 hover:bg-violet-600",
   },
+  {
+    title: "Polygraph Masterclass",
+    description: "What really happens, how to prepare, why deception = automatic DQ",
+    icon: Shield,
+    color: "bg-red-500 hover:bg-red-600",
+  },
+  {
+    title: "Medical Waiver Guide",
+    description: "Blood pressure, vision, past conditions - what needs a waiver",
+    icon: Shield,
+    color: "bg-teal-500 hover:bg-teal-600",
+  },
 ]
 
 const stats = [
   { value: "500+", label: "Clients Helped" },
   { value: "85%", label: "Success Rate" },
-  { value: "50+", label: "Agencies Covered" },
-  { value: "24/7", label: "Access Available" },
+  { value: "6+", label: "Tools (Including Polygraph & Medical)" },
+  { value: "Real Data", label: "From insider sources & LE research" },
 ]
 
 const testimonials = [
@@ -58,6 +70,29 @@ const testimonials = [
     quote: "I've been on the hiring side. These tools would have saved me hours of time. Wish I had this 10 years ago when I started.",
     name: "Lt. Rodriguez (Ret.)",
     role: "Former PD Training Commander",
+  },
+]
+
+  const insiderInsights = [
+  {
+    quote: "They don't care about the crime, they care if you LIE. Polygraph deception = automatic DQ at 77% of agencies.",
+    source: "Insider",
+    type: "warning" as const,
+  },
+  {
+    quote: "NPS 1811? 99% are internal hires. External applicants = waste of time.",
+    source: "Insider",
+    type: "info" as const,
+  },
+  {
+    quote: "Timeline: Written → PAT → Poly → Background → Medical (5 wks before academy) = 10 months total.",
+    source: "Insider",
+    type: "timeline" as const,
+  },
+  {
+    quote: "Gen Z: 44% require pay transparency, 77% say work-life balance crucial, 84% expect mobile-friendly apps.",
+    source: "2026 LE Hiring Study",
+    type: "trend" as const,
   },
 ]
 
@@ -201,7 +236,7 @@ export default function LandingPage() {
                   <div className="flex gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="h-5 w-5 text-amber-400 fill-amber-400" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921.755 1.424.588 1.81l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-.38 1.81.588 1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     ))}
                   </div>
@@ -213,6 +248,49 @@ export default function LandingPage() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Insider Insights */}
+
+      <section className="py-24 px-4 bg-slate-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-900">Insider Reality Checks</h2>
+            <p className="mt-4 text-slate-600 text-lg">
+              Real candidates, real timelines, real warnings - from federal hiring processes and insider research
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {insiderInsights.map((insight, i) => (
+              <Card key={i} className={`border-slate-200 hover:shadow-lg transition-shadow ${
+                insight.type === 'warning' ? 'bg-red-50 border-red-200' : 
+                insight.type === 'info' ? 'bg-blue-50 border-blue-200' :
+                'bg-white'
+              }`}>
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className={`px-2 py-1 rounded text-xs font-bold ${
+                      insight.type === 'warning' ? 'bg-red-100 text-red-700' :
+                      insight.type === 'info' ? 'bg-blue-100 text-blue-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      {insight.source}
+                    </span>
+                  </div>
+                  <p className="text-slate-700 leading-relaxed">{insight.quote}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <p className="text-sm text-slate-500 mb-4">
+              We mine insider sources, hiring studies, and agency data to give you the truth - not just what looks good on a brochure.
+            </p>
+            <Button asChild variant="outline">
+              <Link href="/app/tools/polygraph-masterclass">See Polygraph Truth</Link>
+            </Button>
           </div>
         </div>
       </section>

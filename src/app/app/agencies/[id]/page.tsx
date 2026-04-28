@@ -51,6 +51,12 @@ const AGENCIES: Record<string, any> = {
     disqualifiers: ["Felony", "Domestic violence", "Drug dealing", "Failed polygraph", "Bad credit"],
     process: [{ step: "1", title: "Apply" }, { step: "2", title: "Written" }, { step: "3", title: "Oral" }, { step: "4", title: "Background" }, { step: "5", title: "Polygraph" }, { step: "6", title: "Physical" }, { step: "7", title: "Offer" }],
     sampleQuestions: ["Why FBI?", "Ethical dilemma you faced?", "Handle pressure?", "Why should we hire you?", "Witness misconduct?"],
+    insiderInsights: [
+      { quote: "Suitability can take 6+ months after background completes. Then waiting for offer.", source: "Insider" },
+      { quote: "Polygraph: 'Deception = DQ.' Countermeasures = automatic fail. Be 100% honest.", source: "Insider" },
+      { quote: "Medical waivers take 2-4 weeks if straightforward. BP meds need documentation.", source: "Insider" },
+      { quote: "USAJobs resume builder changed in 2025 - shorter format. Add skills paragraph in experiences.", source: "Insider" },
+    ],
   },
   dea: {
     name: "DEA",
@@ -62,6 +68,12 @@ const AGENCIES: Record<string, any> = {
     disqualifiers: ["Felony", "Drug dealing", "Current drug use", "Failed polygraph"],
     process: [{ step: "1", title: "Apply" }, { step: "2", title: "Written" }, { step: "3", title: "Oral" }, { step: "4", title: "Background" }, { step: "5", title: "Polygraph" }, { step: "6", title: "Physical" }],
     sampleQuestions: ["Why DEA?", "Know drug laws?", "Handle dangerous situations?"],
+    insiderInsights: [
+      { quote: "Suitability/Hiring Panel can take 6+ months after background. Location sheet sent fall, offer in spring.", source: "Insider" },
+      { quote: "Medical waiver: 'Got DQ'd for BP meds. Submitted waiver, cleared in 2 weeks.'", source: "Insider" },
+      { quote: "Polygraph takes 4+ hours. Very intense. 'Countermeasures detected = automatic DQ.'", source: "Insider" },
+      { quote: "DEA moves faster than FBI but slower than local. Budget 2026: 64% increase for salaries/training.", source: "2026 LE Report" },
+    ],
   },
   cbp: {
     name: "CBP",
@@ -240,18 +252,41 @@ function AgencyGuide() {
             </ul>
           </CardContent>
         </Card>
-      </div>
+      )}
 
-      <div className="mt-8">
-        <Link href="/app/tools/strategy-engine">
-          <Button>
-            Get Prepped for {agency.name} <BookOpen className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
-      </div>
+      {agency.insiderInsights && agency.insiderInsights.length > 0 && (
+        <Card className="mt-8 border-blue-200 bg-blue-50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-blue-800">
+              <MessageSquare className="h-5 w-5" />
+              What Insiders Say
+            </CardTitle>
+            <CardDescription className="text-blue-600">
+              Real experiences from federal hiring processes and agency insiders
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3">
+              {agency.insiderInsights.map((insight: any, i: number) => (
+                <li key={i} className="text-sm text-blue-700 bg-white/50 p-3 rounded-lg">
+                  <span className="font-medium">{insight.source}:</span> {insight.quote}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
     </div>
-  )
-}
+
+    <div className="mt-8">
+      <Link href="/app/tools/strategy-engine">
+        <Button>
+          Get Prepped for {agency.name} <BookOpen className="ml-2 h-4 w-4" />
+        </Button>
+      </Link>
+    </div>
+  </div>
+)
 
 export default function AgencyPage() {
   return <AgencyGuide />
