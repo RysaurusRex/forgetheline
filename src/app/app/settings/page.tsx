@@ -1,34 +1,61 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
-import { redirect } from "next/navigation"
+"use client"
+
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 
-export default async function SettingsPage() {
-  const session = await getServerSession(authOptions)
+export default function SettingsPage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const [clientAccess, setClientAccess] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
-  if (!session?.user?.id) {
-    redirect("/login")
-  }
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login")
+    }
+  }, [status, router])
 
-  const clientAccess = await prisma.clientAccess.findUnique({
-    where: { userId: session.user.id },
-  })
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetch(`/api/client-access?userId=${session.user.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setClientAccess(data)
+          setLoading(false)
+        })
+        .catch(() => setLoading(false))
+    }
+  }, [session])
 
-  const statusMap: Record<string, string> = {
-    active: "Active",
-    trialing: "Trialing",
-    past_due: "Past Due",
-    canceled: "Canceled",
-    unpaid: "Unpaid",
-    paused: "Paused",
+  if (status === "loading" || loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
   }
 
   const subStatus = clientAccess?.subscriptionStatus
-  const displayStatus = subStatus ? statusMap[subStatus] || subStatus : "No active subscription"
-  const cancelAtPeriodEnd = clientAccess?.cancelAtPeriodEnd
+  const displayStatus = subStatus ? 
+    (subStatus === "active" ? "Active" : 
+     subStatus === "canceled" ? "Canceled" : 
+     subStatus) : "No active subscription"
+
+  const handleManageSubscription = async () => {
+    try {
+      const res = await fetch("/api/stripe/create-portal-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: session?.user?.id }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (error) {
+      console.error("Failed to create portal session:", error)
+    }
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -48,7 +75,7 @@ export default async function SettingsPage() {
               </span>
             </div>
 
-            {cancelAtPeriodEnd && (
+            {clientAccess?.cancelAtPeriodEnd && (
               <div className="text-sm text-yellow-600">
                 Your subscription will cancel at the end of the billing period.
               </div>
@@ -63,12 +90,15 @@ export default async function SettingsPage() {
               </div>
             )}
 
-            <form action="/api/stripe/create-portal-session" method="POST">
-              <input type="hidden" name="userId" value={session.user.id} />
-              <Button type="submit" className="w-full">
+            {clientAccess?.stripeCustomerId ? (
+              <Button onClick={handleManageSubscription} className="w-full">
                 Manage Subscription in Stripe
               </Button>
-            </form>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                No Stripe customer found. Contact support if you believe this is an error.
+              </p>
+            )}
 
             <p className="text-xs text-muted-foreground">
               Opens Stripe Customer Portal where you can cancel, update payment method, or view invoices.
