@@ -7,6 +7,7 @@ import { Users, LayoutDashboard } from "lucide-react"
 const adminNav = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/customers", label: "Customers", icon: Users },
+  { href: "/admin/customer-support", label: "Customer Support", icon: Users },
 ]
 
 export default async function AdminLayout({

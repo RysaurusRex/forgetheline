@@ -14,9 +14,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { priceId, customerEmail, successUrl, cancelUrl } = body
 
-    // Create checkout session
+    // Create checkout session for subscription
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
+      mode: "subscription",
       payment_method_types: ["card"],
       line_items: [
         {
@@ -24,8 +24,8 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: successUrl || "http://localhost:3000/app/home?payment=success",
-      cancel_url: cancelUrl || "http://localhost:3000/pricing?payment=cancelled",
+      success_url: successUrl || "https://forgetheline.us.com/app/dashboard?payment=success",
+      cancel_url: cancelUrl || "https://forgetheline.us.com/pricing?payment=cancelled",
       customer_email: customerEmail,
     })
 

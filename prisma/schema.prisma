@@ -140,15 +140,20 @@ model ResultsLogEntry {
 }
 
 model ClientAccess {
-  id                String       @id @default(cuid())
-  userId            String       @unique
-  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status           AccessStatus @default(ACTIVE)
-  plan             Plan?
-  coachingCreditCents Int      @default(0)
-  creditBalanceCents  Int       @default(0)
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  id                    String       @id @default(cuid())
+  userId                String       @unique
+  user                  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status                AccessStatus @default(ACTIVE)
+  plan                  Plan?
+  coachingCreditCents   Int          @default(0)
+  creditBalanceCents    Int          @default(0)
+  stripeCustomerId      String?      @unique
+  stripeSubscriptionId  String?
+  currentPeriodEnd      DateTime?
+  subscriptionStatus    String?
+  cancelAtPeriodEnd    Boolean      @default(false)
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
 }
 
 model SalesCreditTracker {

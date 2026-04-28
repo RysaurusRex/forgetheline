@@ -13,6 +13,7 @@ import {
   Building2,
   Share2,
   MessageSquare,
+  Settings,
 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { ThemeToggle } from "./theme-toggle"
@@ -58,17 +59,29 @@ export function PortalNav() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link
-            href="/app/client-profile"
-            className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-              pathname === "/app/client-profile"
-                ? "bg-secondary text-secondary-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-            )}
-          >
-            <User className="h-4 w-4" />
-            Profile
-          </Link>
+             href="/app/client-profile"
+             className={cn(
+               "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+               pathname === "/app/client-profile"
+                 ? "bg-secondary text-secondary-foreground"
+                 : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+             )}
+           >
+             <User className="h-4 w-4" />
+             Profile
+           </Link>
+           <Link
+             href="/app/settings"
+             className={cn(
+               "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+               pathname === "/app/settings"
+                 ? "bg-secondary text-secondary-foreground"
+                 : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+             )}
+           >
+             <Settings className="h-4 w-4" />
+             Settings
+           </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
             className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-secondary"
