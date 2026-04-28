@@ -70,7 +70,6 @@ async function sendWelcomeEmail(customerEmail: string, plan: string, token: stri
     console.error("Failed to send welcome email:", error)
   }
 }
-}
 
 export async function POST(request: NextRequest) {
   try {
