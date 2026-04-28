@@ -252,7 +252,7 @@ function AgencyGuide() {
             </ul>
           </CardContent>
         </Card>
-      )}
+      </div>
 
       {agency.insiderInsights && agency.insiderInsights.length > 0 && (
         <Card className="mt-8 border-blue-200 bg-blue-50">
