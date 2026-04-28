@@ -101,7 +101,7 @@ export default function SettingsPage() {
             )}
 
             <p className="text-xs text-muted-foreground">
-              Opens Stripe Customer Portal where you can cancel, update payment method, or view invoices.
+              Customers can also cancel, update payment method, or view invoices on their Stripe Customer Portal.
             </p>
           </div>
         </CardContent>
