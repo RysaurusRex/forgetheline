@@ -153,9 +153,9 @@ export default function LandingPage() {
             Trusted by 500+ candidates
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-tight">
-            Ace Your<br />
+            Land Your Dream<br />
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-              Law Enforcement Interview
+              Local, State, or Federal Law Enforcement Job
             </span>
           </h1>
           <p className="mt-8 text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
