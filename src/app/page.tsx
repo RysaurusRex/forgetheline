@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { FileText, MessageSquare, AlertTriangle, Lightbulb, Shield, TrendingUp, ChevronRight } from "lucide-react"
+import { FileText, MessageSquare, AlertTriangle, Lightbulb, Shield, TrendingUp, ChevronRight, Star } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const features = [
@@ -290,7 +290,7 @@ export default function LandingPage() {
             {testimonials.map((t, i) => (
               <div key={i} className="p-6 bg-slate-50 rounded-2xl border hover:shadow-lg transition-all hover:scale-[1.02]">
                 <div className="flex items-center gap-1 mb-3">
-                  {[1, 2, 3, 4, 5].map(star => (
+                  {[1, 2, 3, 4, 5].map((star) => (
                     <Star key={star} className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                   ))}
                 </div>
