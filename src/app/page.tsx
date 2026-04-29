@@ -57,29 +57,6 @@ const testimonials = [
   { name: "Sarah K.", location: "FL", text: "Went from 15:30 to 13:45 on my 1.5 mile run using the 8-week training plan. Hired by DEA!", rating: 5 },
 ]
 
-const testimonials = [
-  {
-    quote: "The Resume Analyzer helped me land an interview with the FBI. I used the prompts and got feedback from a real federal agent. Landed an offer.",
-    name: "Michael T.",
-    role: "FBI Special Agent - Hired",
-  },
-  {
-    quote: "Went from 3 failed interviews to an offer in 3 months. The Strategy Engine and Interview Simulator are the real deal. My background got flagged and I fixed it before it killed my chances.",
-    name: "Sarah K.",
-    role: "DEA Special Agent - Hired",
-  },
-  {
-    quote: "The disqualifier scan caught a 10-year-old drug charge I forgot about. Fixed it before applying. Also got the job.",
-    name: "James R.",
-    role: "Police Officer - Hired",
-  },
-  {
-    quote: "I've been on the hiring side. These tools would have saved me hours of time. Wish I had this 10 years ago when I started.",
-    name: "Lt. Rodriguez (Ret.)",
-    role: "Former PD Training Commander",
-  },
-]
-
   const insiderInsights = [
   {
     quote: "They don't care about the crime, they care if you LIE. Polygraph deception = automatic DQ at 77% of agencies.",

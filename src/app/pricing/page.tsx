@@ -78,8 +78,10 @@ const subscriptionPlans = [
 
 export default function PricingPage() {
   const handleBuy = (link: string) => {
-    if (link) {
+    if (link && link !== "#") {
       window.location.href = link
+    } else if (link === "#") {
+      alert("Free tier - no payment required! Sign up for an account to get started.")
     } else {
       alert("Payment link not ready. Email forgetheline@gmail.com to purchase.")
     }
@@ -105,128 +107,92 @@ export default function PricingPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold">Pricing</h1>
-        <p className="mt-4 text-muted-foreground">
-          Choose your monthly plan to access Forge the Line
-        </p>
-      </div>
-
-      <div>
-        <h2 className="text-2xl font-bold text-center mb-6">Monthly Subscription</h2>
-        <p className="text-center text-muted-foreground mb-6">
-          Pay monthly, cancel anytime. Get ongoing access and credit every month.
-        </p>
-        <div className="grid gap-6 md:grid-cols-4 max-w-7xl mx-auto">
-          {subscriptionPlans.map((plan) => (
-            <Card 
-              key={plan.name} 
-              className={plan.highlight ? "border-primary shadow-lg relative" : plan.type === "free" ? "border-green-200 bg-green-50 relative" : "relative"}
-            >
-              {plan.highlight && (
-                <Badge className="absolute -top-3 right-4" variant="default">
-                  Popular
-                </Badge>
-              )}
-              {plan.type === "free" && (
-                <Badge className="absolute -top-3 left-4 bg-green-500" variant="default">
-                  FREE
-                </Badge>
-              )}
-              <Badge className="absolute -top-3 right-4 bg-blue-500" variant="default">
-                Insider Approved
-              </Badge>
-              <CardHeader>
-                <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                <CardDescription>{plan.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-5xl font-bold mb-4">
-                  {plan.price}<span className="text-xl font-normal">{plan.period}</span>
-                </div>
-                <ul className="space-y-2">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <svg
-                        className="mr-2 h-4 w-4 text-green-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  className={`w-full ${plan.type === "free" ? "bg-green-500 hover:bg-green-600" : ""}`} 
-                  variant={plan.highlight ? "default" : plan.type === "free" ? "default" : "outline"}
-                  onClick={() => handleBuy(plan.link)}
-                >
-                  {plan.type === "free" ? "Start Free" : plan.name === "Basic" ? "Get Started" : plan.name === "Plus" ? "Go Pro" : "Go Premium"}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold">Pricing</h1>
+          <p className="mt-4 text-muted-foreground">
+            Choose your plan to access Forge the Line
+          </p>
         </div>
-                <ul className="space-y-2">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <svg
-                        className="mr-2 h-4 w-4 text-green-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  className="w-full text-lg py-6" 
-                  variant={plan.highlight ? "default" : "outline"}
-                  onClick={() => handleBuy(plan.link)}
-                >
-                  Subscribe for {plan.price}{plan.period}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      </div>
 
-      <div className="mt-12 text-center">
-        <p className="text-muted-foreground">
-          Questions? Email{" "}
-          <a href="mailto:forgetheline@gmail.com" className="text-primary hover:underline">
-            forgetheline@gmail.com
-          </a>
-        </p>
-      </div>
-    </main>
-
-      <footer className="border-t py-6 px-4">
-        <div className="container mx-auto text-center text-sm text-muted-foreground">
-          © 2025 Forge the Line
+        <div>
+          <h2 className="text-2xl font-bold text-center mb-6">Monthly Subscription</h2>
+          <p className="text-center text-muted-foreground mb-6">
+            Pay monthly, cancel anytime. Get ongoing access and credit every month.
+          </p>
+          <div className="grid gap-6 md:grid-cols-4 max-w-7xl mx-auto">
+            {subscriptionPlans.map((plan) => (
+              <Card 
+                key={plan.name} 
+                className={plan.highlight ? "border-primary shadow-lg relative" : plan.type === "free" ? "border-green-200 bg-green-50 relative" : "relative"}
+              >
+                {plan.highlight && (
+                  <Badge className="absolute -top-3 right-4" variant="default">
+                    Popular
+                  </Badge>
+                )}
+                {plan.type === "free" && (
+                  <Badge className="absolute -top-3 left-4 bg-green-500" variant="default">
+                    FREE
+                  </Badge>
+                )}
+                {plan.type !== "free" && (
+                  <Badge className="absolute -top-3 right-4 bg-blue-500" variant="default">
+                    Insider Approved
+                  </Badge>
+                )}
+                <CardHeader>
+                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                  <CardDescription>{plan.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-5xl font-bold mb-4">
+                    {plan.price}<span className="text-xl font-normal">{plan.period}</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-center">
+                        <svg
+                          className="mr-2 h-4 w-4 text-green-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button 
+                    className={`w-full ${plan.type === "free" ? "bg-green-500 hover:bg-green-600" : ""}`} 
+                    variant={plan.highlight ? "default" : plan.type === "free" ? "default" : "outline"}
+                    onClick={() => handleBuy(plan.link)}
+                  >
+                    {plan.type === "free" ? "Start Free" : plan.name === "Basic" ? "Get Started" : plan.name === "Plus" ? "Go Pro" : "Go Premium"}
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
-      </footer>
+
+        <div className="mt-12 p-8 bg-muted/50 rounded-xl text-center">
+          <h3 className="text-xl font-bold mb-4">Need a Custom Plan?</h3>
+          <p className="text-muted-foreground mb-4">
+            Contact us for enterprise pricing or special circumstances.
+          </p>
+          <Button asChild variant="outline">
+            <Link href="/contact">Contact Us</Link>
+          </Button>
+        </div>
+      </main>
     </div>
   )
 }
