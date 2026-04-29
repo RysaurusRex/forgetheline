@@ -24,7 +24,7 @@ const AGENCY_FITNESS: Record<string, {
       { name: "300m Sprint", requirement: "< 58s", agencyStandard: "FBI: < 58s (all ages)" },
     ],
     trainingWeeks: 8,
-    insiderTip: "Insider (r/1811): 'FBI fitness is pass/fail. Score higher to show you're ready for FLETc. Run < 13:30 to be competitive.'",
+    insiderTip: "Insider: 'FBI fitness is pass/fail. Score higher to show you're ready for FLETC. Run < 13:30 to be competitive.'",
   },
   dea: {
     testName: "DEA Physical Task Test",
@@ -46,7 +46,7 @@ const AGENCY_FITNESS: Record<string, {
       { name: "Bench Press", requirement: "75% body weight", agencyStandard: "Some depts require bench press" },
     ],
     trainingWeeks: 6,
-    insiderTip: "Insider (Police1): '68% of Gen Z want fitness prep tools. Local PD tests vary - check YOUR department's exact standards.'",
+    insiderTip: "Insider: '68% of Gen Z want fitness prep tools. Local PD tests vary - check YOUR department's exact standards.'",
   },
 }
 
@@ -63,13 +63,13 @@ const TRAINING_PLAN = [
 ]
 
 export default function FitnessPage() {
-  const [agency, setAgency] = useState<keyof typeof AGENCY_FITNESS>("fbi")
-  const [pushupPR, setPushupPR] = useState("")
-  const [runTime, setRunTime] = useState("")
-  const [currentWeek, setCurrentWeek] = useState(1)
+  const [agency, setAgency] = useState<keyof typeof AGENCY_FITNESS>("fbi"))
+  const [pushupPR, setPushupPR] = useState(""))
+  const [runTime, setRunTime] = useState(""))
+  const [currentWeek, setCurrentWeek] = useState(1))
 
   const fitness = AGENCY_FITNESS[agency]
-  const training = TRAINING_PLAN[currentWeek - 1]
+  const training = TRAINING_PLAN[currentWeek - 1])
 
   const calculateProgress = () => {
     let progress = 0
@@ -138,10 +138,10 @@ export default function FitnessPage() {
         {/* Progress Tracking */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Dumbbell className="h-5 w-5" />
-              Track Your Progress
-            </CardTitle>
+              <CardTitle>Track Your Progress</CardTitle>
+            </div>
             <CardDescription>Log your current PRs to see your readiness</CardDescription>
           </CardHeader>
           <CardContent>
@@ -219,14 +219,9 @@ export default function FitnessPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  8-Week Training Plan
-                </CardTitle>
-                <CardDescription>
-                  Based on insider research - progressive overload for {fitness.testName}
-                </CardDescription>
+              <div className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                <CardTitle>8-Week Training Plan</CardTitle>
               </div>
               <div className="flex items-center gap-2">
                 <Button
