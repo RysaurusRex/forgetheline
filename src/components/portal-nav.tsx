@@ -25,6 +25,7 @@ const navItems = [
   { href: "/app/start-here", label: "Start Here", icon: FileText },
   { href: "/app/examples", label: "Examples", icon: FileCheck },
   { href: "/app/agencies", label: "Agencies", icon: Building2 },
+  { href: "/app/tools", label: "Tools", icon: Wrench },
   { href: "/app/forum", label: "Forum", icon: MessageSquare },
 ]
 
