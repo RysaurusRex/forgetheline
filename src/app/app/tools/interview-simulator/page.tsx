@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,7 +27,7 @@ const AGENCY_QUESTIONS: Record<string, Array<{ question: string; type: string; t
     {
       question: "You witness another agent planting evidence. What do you do?",
       type: "Situational",
-      tip: "Insider: 'Answer must show you'll report, even if it's uncomfortable. FBI prioritizes integrity above all.'",
+      tip: "Insider: 'FBI: 'We need to know you'll do the job regardless of personal relationships. Answer: 'I'd recuse myself AND report the conflict.''",
       star: false,
     },
     {
@@ -45,7 +45,7 @@ const AGENCY_QUESTIONS: Record<string, Array<{ question: string; type: string; t
     {
       question: "You're asked to investigate a close friend. How do you handle the conflict of interest?",
       type: "Situational",
-      tip: "Insider: 'FBI: 'We need to know you'll do the job regardless of personal relationships. Answer: 'I'd recuse myself AND report the conflict.''",
+      tip: "Insider: 'FBI: 'This is a test. Answer: 'I'd recuse myself AND report the conflict.''",
       star: false,
     },
   ],
@@ -130,9 +130,9 @@ const AGENCY_QUESTIONS: Record<string, Array<{ question: string; type: string; t
 const STAR_HELPER = {
   title: "STAR Method",
   steps: [
-    { letter: "S", label: "Situation", desc: "1-2 sentences: Set the scene (1-2 sentences)" },
+    { letter: "S", label: "Situation", desc: "1-2 sentences: Set the scene" },
     { letter: "T", label: "Task", desc: "What needed to be done?" },
-    { letter: "A", label: "Action", desc: "What YOU specifically did (not 'we')" },
+    { letter: "A", label: "Action", desc: "What YOU specifically did" },
     { letter: "R", label: "Result", desc: "Outcome + what you learned" },
   ],
 }
@@ -277,7 +277,9 @@ export default function InterviewSimulatorPage() {
         </div>
       </div>
 
-        <p className="text-muted-foreground mb-8">
+      <p className="text-muted-foreground mb-8">
+        Practice with real questions from {agency.toUpperCase()} oral boards. Based on insider research.
+      </p>
 
       {/* Timer & Progress */}
       <div className="flex items-center justify-between mb-6 p-4 bg-muted rounded-lg">
@@ -400,7 +402,7 @@ export default function InterviewSimulatorPage() {
       <Card className="border-red-200 bg-red-50">
         <CardContent className="pt-6">
           <p className="text-sm text-red-700">
-              <strong>Reality Check from Insiders:</strong> "Oral boards test one thing: Would these officers trust you with a gun, a badge, and their life? Every answer should show integrity, teamwork, and good judgment. They're not looking for perfection—they're looking for someone they'd want to ride with."
+            <strong>Reality Check from Insiders:</strong> "Oral boards test one thing: Would these officers trust you with a gun, a badge, and their life? Every answer should show integrity, teamwork, and good judgment. They're not looking for perfection—they're looking for someone they'd want to ride with."
           </p>
         </CardContent>
       </Card>
