@@ -34,10 +34,7 @@ export function PortalNav() {
     <nav className="border-b bg-card">
       <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Forge the Line" className="h-8 w-auto" />
-            <span className="text-lg font-semibold">Forge the Line</span>
-          </div>
+          <span className="text-lg font-semibold">Forge the Line</span>
           <div className="flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href

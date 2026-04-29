@@ -50,10 +50,7 @@ export default function HowItWorksPage() {
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-card/95 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Forge the Line" className="h-10 w-auto" />
-            <span className="text-xl font-bold">Forge the Line</span>
-          </Link>
+          <Link href="/" className="text-xl font-bold">Forge the Line</Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/how-it-works" className="text-sm text-muted-foreground hover:text-foreground">How It Works</Link>
             <Link href="/faq" className="text-sm text-muted-foreground hover:text-foreground">FAQ</Link>

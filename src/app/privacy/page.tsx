@@ -6,10 +6,7 @@ export default function PrivacyPage() {
     <div className="min-h-screen flex flex-col">
       <header className="border-b bg-card">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Forge the Line" className="h-10 w-auto" />
-            <span className="text-xl font-bold">Forge the Line</span>
-          </Link>
+          <Link href="/" className="text-xl font-bold">Forge the Line</Link>
           <Link href="/">
             <Button variant="ghost">Back to Home</Button>
           </Link>
