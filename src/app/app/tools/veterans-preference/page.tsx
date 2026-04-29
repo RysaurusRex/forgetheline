@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
-import { CheckCircle, AlertCircle, Star, Info, Home, ChevronRight, ArrowRight } from "lucide-react"
+import { CheckCircle, AlertCircle, Star, Info, Home, ChevronRight, ArrowRight, Medal, Award, Users, FileText } from "lucide-react"
 
 // Veterans Preference data
 const VETERANS_INFO = {
@@ -13,9 +13,9 @@ const VETERANS_INFO = {
     title: "Veterans Preference in Federal LE",
     description: "Federal law gives hiring preference to veterans. Here's how it works.",
     points: [
-      { type: "5-Point Preference", criteria: "Active duty in war, campaign, or expedition", proof: "DD214 (Member 4 copy)", color: "bg-blue-100 text-blue-800", icon: "🎖️" },
-      { type: "10-Point Preference", criteria: "Disabled veteran (30%+ disability rating)", proof: "DD214 + VA disability letter", color: "bg-purple-100 text-purple-800", icon: "🏅" },
-      { type: "Spouse/ Widow(er)", criteria: "Spouse of disabled/ deceased veteran", proof: "Marriage cert + death/ disability proof", color: "bg-green-100 text-green-800", icon: "💼" },
+      { type: "5-Point Preference", criteria: "Active duty in war, campaign, or expedition", proof: "DD214 (Member 4 copy)", color: "bg-blue-100 text-blue-800", icon: "medal" },
+      { type: "10-Point Preference", criteria: "Disabled veteran (30%+ disability rating)", proof: "DD214 + VA disability letter", color: "bg-purple-100 text-purple-800", icon: "award" },
+      { type: "Spouse/ Widow(er)", criteria: "Spouse of disabled/ deceased veteran", proof: "Marriage cert + death/ disability proof", color: "bg-green-100 text-green-800", icon: "users" },
     ],
   },
   federalAgencies: [
@@ -26,7 +26,6 @@ const VETERANS_INFO = {
       insiderTip: "Phase I scored 0-100. Veterans get 5-10 points added. That's huge when cutoff is 70.",
       special: "Veterans with 10-point eligible for direct hire in some cases",
       color: "blue",
-      icon: "🕵️",
     },
     {
       agency: "DEA",
@@ -35,7 +34,6 @@ const VETERANS_INFO = {
       insiderTip: "DEA values military experience. Special Ops background is gold. They understand discipline.",
       special: "Veterans may get location preference near military bases",
       color: "green",
-      icon: "💊",
     },
     {
       agency: "ATF",
@@ -44,17 +42,15 @@ const VETERANS_INFO = {
       insiderTip: "ATF loves military vets. Explosives, firearms, tactical experience all transfer.",
       special: "Veterans with explosives/ EOD background fast-tracked",
       color: "orange",
-      icon: "🔫",
     },
-      {
-        agency: "CBP / Border Patrol",
-        preference: "Yes - Strong preference",
-        howItWorks: "Veterans get 10-point + can apply up to age 40 (vs 37 for non-vets).",
-        insiderTip: "CBP is veteran-heavy. 40% of agents are vets. They understand military culture.",
-        special: "Age limit WAIVED for veterans (up to 40 instead of 37)",
-        color: "blue",
-        icon: "🛂",
-      },
+    {
+      agency: "CBP / Border Patrol",
+      preference: "Yes - Strong preference",
+      howItWorks: "Veterans get 10-point + can apply up to age 40 (vs 37 for non-vets).",
+      insiderTip: "CBP is veteran-heavy. 40% of agents are vets. They understand military culture.",
+      special: "Age limit WAIVED for veterans (up to 40 instead of 37)",
+      color: "blue",
+    },
     {
       agency: "Local PD",
       preference: "Varies by department",
@@ -62,15 +58,14 @@ const VETERANS_INFO = {
       insiderTip: "Local PD: Veterans get 5-10 points on written. Some depts match military rank to sergeant.",
       special: "Many depts have veterans units or promotion preference",
       color: "slate",
-      icon: "🚔",
     },
   ],
   myths: [
-    { myth: "Veterans automatically get hired", truth: "False. You still must pass all tests. Preference just adds points.", icon: "❌" },
-    { myth: "Only combat veterans get preference", truth: "False. Any veteran with honorable discharge qualifies for 5-point.", icon: "❌" },
-    { myth: "10-point preference means disabled", truth: "True. You need 30%+ VA disability rating for 10-point.", icon: "✅" },
-    { myth: "Veterans skip the background investigation", truth: "False. Everyone gets full background, veteran or not.", icon: "❌" },
-    { myth: "I can use veterans preference for multiple agencies", truth: "True. It applies to all federal agencies you apply to.", icon: "✅" },
+    { myth: "Veterans automatically get hired", truth: "False. You still must pass all tests. Preference just adds points.", icon: "x" },
+    { myth: "Only combat veterans get preference", truth: "False. Any veteran with honorable discharge qualifies for 5-point.", icon: "x" },
+    { myth: "10-point preference means disabled", truth: "True. You need 30%+ VA disability rating for 10-point.", icon: "check" },
+    { myth: "Veterans skip the background investigation", truth: "False. Everyone gets full background, veteran or not.", icon: "x" },
+    { myth: "I can use veterans preference for multiple agencies", truth: "True. It applies to all federal agencies you apply to.", icon: "check" },
   ],
   documents: [
     { doc: "DD214 (Member 4 copy)", purpose: "Proves service, discharge type, awards", when: "Always required", priority: "High" },
@@ -103,28 +98,33 @@ export default function VeteransPreferencePage() {
       <div className="space-y-6">
         {/* Hero Overview */}
         <Card className="hover:shadow-xl transition-shadow bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <div className="h-12 w-12 rounded-xl bg-yellow-100 flex items-center justify-center">
-                <Star className="h-6 w-6 text-yellow-600" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl">{VETERANS_INFO.overview.title}</CardTitle>
-                <CardDescription className="text-base">{VETERANS_INFO.overview.description}</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {VETERANS_INFO.overview.points.map((point, i) => (
-                <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-105">
-                  <div className="text-2xl mb-2">{point.icon}</div>
-                  <Badge className={`mb-2 ${point.color}`}>{point.type}</Badge>
-                  <p className="text-sm font-medium mb-1">{point.criteria}</p>
-                  <p className="text-xs text-muted-foreground">Proof: {point.proof}</p>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <div className="h-12 w-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+                  <Star className="h-6 w-6 text-yellow-600" />
                 </div>
-              ))}
-            </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">{VETERANS_INFO.overview.title}</h2>
+                  <p className="text-base text-gray-700 mt-1">{VETERANS_INFO.overview.description}</p>
+                </div>
+              </div>
+            </CardHeader>
+          <CardContent>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {VETERANS_INFO.overview.points.map((point, i) => {
+                  const IconComponent = point.icon === "medal" ? Medal : point.icon === "award" ? Award : Users
+                  return (
+                    <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-105">
+                      <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-2">
+                        <IconComponent className="h-6 w-6" />
+                      </div>
+                      <Badge className={`mb-2 ${point.color}`}>{point.type}</Badge>
+                      <p className="text-sm font-medium mb-1">{point.criteria}</p>
+                      <p className="text-xs text-muted-foreground">Proof: {point.proof}</p>
+                    </div>
+                  )
+                })}
+              </div>
           </CardContent>
         </Card>
 
@@ -144,18 +144,26 @@ export default function VeteransPreferencePage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="font-medium text-sm mb-2">✅ Yes</p>
+                  <p className="font-medium text-sm mb-2 flex items-center gap-1">
+                    <CheckCircle className="h-4 w-4 text-green-600" /> Yes
+                  </p>
                   <p className="text-xs text-muted-foreground mb-2">→ You qualify for 5-point preference</p>
                   <div className="p-3 bg-white rounded border">
                     <p className="text-xs font-medium">Do you have 30%+ VA disability?</p>
                     <div className="mt-2 space-y-1">
-                      <p className="text-xs">✅ Yes → <strong>10-point preference</strong></p>
-                      <p className="text-xs">❌ No → <strong>5-point preference</strong></p>
+                      <p className="text-xs flex items-center gap-1">
+                        <CheckCircle className="h-3 w-3 text-green-600" /> Yes → <strong>10-point preference</strong>
+                      </p>
+                      <p className="text-xs flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3 text-red-600" /> No → <strong>5-point preference</strong>
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                  <p className="font-medium text-sm mb-2">❌ No</p>
+                  <p className="font-medium text-sm mb-2 flex items-center gap-1">
+                    <AlertCircle className="h-4 w-4 text-red-600" /> No
+                  </p>
                   <p className="text-xs text-muted-foreground">→ You do NOT qualify for veterans preference</p>
                   <p className="text-xs text-muted-foreground mt-2">But you can still apply! Many agencies hire non-veterans.</p>
                 </div>
@@ -176,8 +184,7 @@ export default function VeteransPreferencePage() {
                 <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-[1.02]">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <div className="text-2xl mb-1">{agency.icon}</div>
-                      <h4 className="font-bold">{agency.agency}</h4>
+                      <h4 className="font-bold text-lg">{agency.agency}</h4>
                     </div>
                     <Badge className={`bg-${agency.color}-100 text-${agency.color}-800 font-medium`}>
                       {agency.preference}
@@ -214,10 +221,14 @@ export default function VeteransPreferencePage() {
             <div className="grid gap-3 sm:grid-cols-2">
               {VETERANS_INFO.myths.map((item, i) => (
                 <div key={i} className="flex items-start gap-3 p-4 border rounded-xl hover:bg-muted/30 transition-colors">
-                  <span className="text-xl">{item.icon}</span>
+                  {item.icon === "check" ? (
+                    <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="h-6 w-6 text-red-600 flex-shrink-0 mt-0.5" />
+                  )}
                   <div>
-                    <p className="text-sm font-medium text-red-600">{item.myth}</p>
-                    <p className="text-sm text-green-600 mt-1">{item.truth}</p>
+                    <p className="text-sm font-medium text-gray-900">{item.myth}</p>
+                    <p className="text-sm text-gray-700 mt-1">{item.truth}</p>
                   </div>
                 </div>
               ))}
