@@ -33,7 +33,7 @@ const AGENCY_FITNESS: Record<string, {
       { name: "Agility Course", requirement: "Pass", agencyStandard: "DEA: Obstacle course" },
     ],
     trainingWeeks: 8,
-    insiderTip: "Insider (r/1811): 'DEA is more about completing than speed. Focus on consistency. Agility course tests real-world movement.'",
+    insiderTip: "Insider: 'DEA is more about completing than speed. Focus on consistency. Agility course tests real-world movement.'",
   },
   local: {
     testName: "PAT (Physical Abilities Test)",

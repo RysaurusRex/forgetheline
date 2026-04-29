@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import { Lightbulb, Clock, CheckCircle, ArrowLeft, ArrowRight, RotateCcw } from "lucide-react"
 import Link from "next/link"
 
-// Agency-specific questions based on insider research (r/1811, Police1)
+// Agency-specific questions based on insider research
 const AGENCY_QUESTIONS: Record<string, Array<{ question: string; type: string; tip: string; star?: boolean }>> = {
   fbi: [
     {
@@ -277,9 +277,7 @@ export default function InterviewSimulatorPage() {
         </div>
       </div>
 
-      <p className="text-muted-foreground mb-8">
-        Practice with real questions from {agency.toUpperCase()} oral boards. Based on insider research from r/1811 and Police1.
-      </p>
+        <p className="text-muted-foreground mb-8">
 
       {/* Timer & Progress */}
       <div className="flex items-center justify-between mb-6 p-4 bg-muted rounded-lg">
@@ -402,7 +400,7 @@ export default function InterviewSimulatorPage() {
       <Card className="border-red-200 bg-red-50">
         <CardContent className="pt-6">
           <p className="text-sm text-red-700">
-            <strong>Reality Check from r/1811:</strong> "Oral boards test one thing: Would these officers trust you with a gun, a badge, and their life? Every answer should show integrity, teamwork, and good judgment. They're not looking for perfection—they're looking for someone they'd want to ride with."
+              <strong>Reality Check from Insiders:</strong> "Oral boards test one thing: Would these officers trust you with a gun, a badge, and their life? Every answer should show integrity, teamwork, and good judgment. They're not looking for perfection—they're looking for someone they'd want to ride with."
           </p>
         </CardContent>
       </Card>
