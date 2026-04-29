@@ -19,7 +19,7 @@ const subscriptionPlans = [
     link: "#",
     description: "Try before you buy",
     features: [
-      "Interview Simulator (3 questions)",
+      "1 Interview Question",
       "Fitness Standards Guide",
       "Veterans Preference Guide",
       "Community forum access",
