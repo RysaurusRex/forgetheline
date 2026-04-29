@@ -63,13 +63,13 @@ const TRAINING_PLAN = [
 ]
 
 export default function FitnessPage() {
-  const [agency, setAgency] = useState<keyof typeof AGENCY_FITNESS>("fbi"))
-  const [pushupPR, setPushupPR] = useState(""))
-  const [runTime, setRunTime] = useState(""))
-  const [currentWeek, setCurrentWeek] = useState(1))
+  const [agency, setAgency] = useState<keyof typeof AGENCY_FITNESS>("fbi")
+  const [pushupPR, setPushupPR] = useState("")
+  const [runTime, setRunTime] = useState("")
+  const [currentWeek, setCurrentWeek] = useState(1)
 
   const fitness = AGENCY_FITNESS[agency]
-  const training = TRAINING_PLAN[currentWeek - 1])
+  const training = TRAINING_PLAN[currentWeek - 1]
 
   const calculateProgress = () => {
     let progress = 0
