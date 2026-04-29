@@ -109,23 +109,23 @@ export default function VeteransPreferencePage() {
                 </div>
               </div>
             </CardHeader>
-          <CardContent>
-              <div className="grid gap-4 sm:grid-cols-3">
-                {VETERANS_INFO.overview.points.map((point, i) => {
+              <CardContent>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {VETERANS_INFO.overview.points.map((point, i) => {
                   const IconComponent = point.icon === "medal" ? Medal : point.icon === "award" ? Award : Users
                   return (
-                    <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-105">
+                    <div key={i} className="p-4 border-2 rounded-xl bg-white hover:shadow-md transition-all hover:scale-105">
                       <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-2">
                         <IconComponent className="h-6 w-6" />
                       </div>
                       <Badge className={`mb-2 ${point.color}`}>{point.type}</Badge>
-                      <p className="text-sm font-medium mb-1">{point.criteria}</p>
-                      <p className="text-xs text-muted-foreground">Proof: {point.proof}</p>
+                      <p className="text-sm font-medium text-gray-900 mb-1">{point.criteria}</p>
+                      <p className="text-xs text-gray-700">Proof: {point.proof}</p>
                     </div>
                   )
                 })}
-              </div>
-          </CardContent>
+                </div>
+              </CardContent>
         </Card>
 
         {/* Decision Tree */}
@@ -147,14 +147,14 @@ export default function VeteransPreferencePage() {
                   <p className="font-medium text-sm mb-2 flex items-center gap-1">
                     <CheckCircle className="h-4 w-4 text-green-600" /> Yes
                   </p>
-                  <p className="text-xs text-muted-foreground mb-2">→ You qualify for 5-point preference</p>
+                  <p className="text-xs text-blue-800 mb-2">→ You qualify for 5-point preference</p>
                   <div className="p-3 bg-white rounded border">
-                    <p className="text-xs font-medium">Do you have 30%+ VA disability?</p>
+                    <p className="text-xs font-medium text-gray-900">Do you have 30%+ VA disability?</p>
                     <div className="mt-2 space-y-1">
-                      <p className="text-xs flex items-center gap-1">
+                      <p className="text-xs text-gray-900 flex items-center gap-1">
                         <CheckCircle className="h-3 w-3 text-green-600" /> Yes → <strong>10-point preference</strong>
                       </p>
-                      <p className="text-xs flex items-center gap-1">
+                      <p className="text-xs text-gray-900 flex items-center gap-1">
                         <AlertCircle className="h-3 w-3 text-red-600" /> No → <strong>5-point preference</strong>
                       </p>
                     </div>
@@ -164,8 +164,8 @@ export default function VeteransPreferencePage() {
                   <p className="font-medium text-sm mb-2 flex items-center gap-1">
                     <AlertCircle className="h-4 w-4 text-red-600" /> No
                   </p>
-                  <p className="text-xs text-muted-foreground">→ You do NOT qualify for veterans preference</p>
-                  <p className="text-xs text-muted-foreground mt-2">But you can still apply! Many agencies hire non-veterans.</p>
+                  <p className="text-xs text-red-800">→ You do NOT qualify for veterans preference</p>
+                  <p className="text-xs text-red-700 mt-2">But you can still apply! Many agencies hire non-veterans.</p>
                 </div>
               </div>
             </div>
@@ -181,25 +181,25 @@ export default function VeteransPreferencePage() {
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {VETERANS_INFO.federalAgencies.map((agency, i) => (
-                <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-[1.02]">
+                <div key={i} className="p-4 border-2 rounded-xl bg-white hover:shadow-md transition-all hover:scale-[1.02]">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h4 className="font-bold text-lg">{agency.agency}</h4>
+                      <h4 className="font-bold text-lg text-gray-900">{agency.agency}</h4>
                     </div>
                     <Badge className={`bg-${agency.color}-100 text-${agency.color}-800 font-medium`}>
                       {agency.preference}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{agency.howItWorks}</p>
+                  <p className="text-sm text-gray-700 mb-3">{agency.howItWorks}</p>
                   <div className="p-2 bg-blue-50 rounded-lg mb-2">
-                    <p className="text-xs text-blue-700 flex items-start gap-1">
+                    <p className="text-xs text-blue-800 flex items-start gap-1">
                       <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
                       {agency.insiderTip}
                     </p>
                   </div>
                   {agency.special && (
                     <div className="p-2 bg-green-50 rounded-lg">
-                      <p className="text-xs text-green-700 flex items-center gap-1">
+                      <p className="text-xs text-green-800 flex items-center gap-1">
                         <CheckCircle className="h-3 w-3" />
                         {agency.special}
                       </p>
@@ -220,7 +220,7 @@ export default function VeteransPreferencePage() {
           <CardContent>
             <div className="grid gap-3 sm:grid-cols-2">
               {VETERANS_INFO.myths.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 border rounded-xl hover:bg-muted/30 transition-colors">
+                <div key={i} className="flex items-start gap-3 p-4 border rounded-xl bg-white hover:bg-gray-50 transition-colors">
                   {item.icon === "check" ? (
                     <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                   ) : (
