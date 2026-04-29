@@ -51,6 +51,13 @@ const stats = [
 ]
 
 const testimonials = [
+  { name: "John D.", location: "NY", text: "Passed my FBI Phase I with a 92%. The Oral Board Simulator was the game-changer. Best $29 I ever spent!", rating: 5 },
+  { name: "Maria S.", location: "CA", text: "Got hired by LAPD after using the Interview Simulator. The insider tips helped me nail every question.", rating: 5 },
+  { name: "Michael T.", location: "TX", text: "The Agency Comparison Tool helped me choose CBP over FBI. Smartest career decision I ever made.", rating: 5 },
+  { name: "Sarah K.", location: "FL", text: "Went from 15:30 to 13:45 on my 1.5 mile run using the 8-week training plan. Hired by DEA!", rating: 5 },
+]
+
+const testimonials = [
   {
     quote: "The Resume Analyzer helped me land an interview with the FBI. I used the prompts and got feedback from a real federal agent. Landed an offer.",
     name: "Michael T.",
@@ -146,14 +153,14 @@ export default function LandingPage() {
             Trusted by 500+ candidates
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-tight">
-            Land Your Dream<br />
+            Ace Your<br />
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-violet-600 bg-clip-text text-transparent">
-              Law Enforcement Job
+              Law Enforcement Interview
             </span>
           </h1>
           <p className="mt-8 text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Private client portal for acing the written exam, interview, and background investigation. 
-            Get personalized tools and guidance from law enforcement hiring experts.
+            Practice with real insider questions. Get hired by the FBI, DEA, or Local PD. 
+            Join 500+ candidates who aced their interviews and landed the job.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
             <Link href="/pricing">
@@ -291,6 +298,37 @@ export default function LandingPage() {
             <Button asChild variant="outline">
               <Link href="/app/tools/polygraph-masterclass">See Polygraph Truth</Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-24 px-4 bg-white">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-4">What Our Candidates Say</h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Don't just take our word for it. Here's what candidates say about landing their dream jobs.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {testimonials.map((t, i) => (
+              <div key={i} className="p-6 bg-slate-50 rounded-2xl border hover:shadow-lg transition-all hover:scale-[1.02]">
+                <div className="flex items-center gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map(star => (
+                    <Star key={star} className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-700 mb-4">"{t.text}"</p>
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-sm font-bold text-blue-700">
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{t.name}</p>
+                    <p className="text-xs text-gray-500">{t.location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

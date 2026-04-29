@@ -13,6 +13,22 @@ const SUB_PRO_LINK = "https://buy.stripe.com/9B6bJ14hi7xQ7kkdW17g404"
 
 const subscriptionPlans = [
   {
+    name: "Free",
+    price: "$0",
+    period: "/forever",
+    link: "#",
+    description: "Try before you buy",
+    features: [
+      "Interview Simulator (3 questions)",
+      "Fitness Standards Guide",
+      "Veterans Preference Guide",
+      "Community forum access",
+      "Upgrade anytime",
+    ],
+    highlight: false,
+    type: "free",
+  },
+  {
     name: "Basic",
     price: "$19.99",
     period: "/month",
@@ -24,6 +40,7 @@ const subscriptionPlans = [
       "Client profile",
       "Community forum access",
       "Cancel anytime",
+      "30-day money-back guarantee",
     ],
     highlight: false,
     type: "subscription",
@@ -39,6 +56,7 @@ const subscriptionPlans = [
       "$50/month coaching credit",
       "Priority support",
       "New content drops",
+      "30-day money-back guarantee",
     ],
     highlight: true,
     type: "subscription",
@@ -54,6 +72,7 @@ const subscriptionPlans = [
       "$100/month coaching credit",
       "1-on-1 monthly call",
       "Early access to new features",
+      "30-day money-back guarantee",
     ],
     highlight: false,
     type: "subscription",
@@ -101,15 +120,25 @@ export default function PricingPage() {
         <p className="text-center text-muted-foreground mb-6">
           Pay monthly, cancel anytime. Get ongoing access and credit every month.
         </p>
-        <div className="grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-4 max-w-7xl mx-auto">
           {subscriptionPlans.map((plan) => (
             <Card 
               key={plan.name} 
-              className={plan.highlight ? "border-primary shadow-lg" : ""}
+              className={plan.highlight ? "border-primary shadow-lg relative" : plan.type === "free" ? "border-green-200 bg-green-50 relative" : "relative"}
             >
               {plan.highlight && (
                 <Badge className="absolute -top-3 right-4" variant="default">
                   Popular
+                </Badge>
+              )}
+              {plan.type === "free" && (
+                <Badge className="absolute -top-3 left-4 bg-green-500" variant="default">
+                  FREE
+                </Badge>
+              )}
+              {plan.features.some(f => f.includes("money-back")) && (
+                <Badge className="absolute -top-3 right-4 bg-yellow-500" variant="default">
+                  30-Day Guarantee
                 </Badge>
               )}
               <CardHeader>
@@ -120,6 +149,43 @@ export default function PricingPage() {
                 <div className="text-5xl font-bold mb-4">
                   {plan.price}<span className="text-xl font-normal">{plan.period}</span>
                 </div>
+                <ul className="space-y-2">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-center">
+                      <svg
+                        className="mr-2 h-4 w-4 text-green-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      {feature.includes("money-back") ? (
+                        <span className="text-green-600 font-medium">{feature}</span>
+                      ) : (
+                        <span>{feature}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  className={`w-full ${plan.type === "free" ? "bg-green-500 hover:bg-green-600" : ""}`} 
+                  variant={plan.highlight ? "default" : plan.type === "free" ? "default" : "outline"}
+                  onClick={() => handleBuy(plan.link)}
+                >
+                  {plan.type === "free" ? "Start Free" : plan.name === "Basic" ? "Get Started" : plan.name === "Plus" ? "Go Pro" : "Go Premium"}
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
                 <ul className="space-y-2">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center">
