@@ -139,12 +139,12 @@ export default function VeteransPreferencePage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="p-4 bg-green-50 rounded-lg border border-green-200 text-center">
-                <p className="font-medium">Are you a veteran with honorable discharge?</p>
-              </div>
+               <div className="p-4 bg-green-50 rounded-lg border border-green-200 text-center">
+                 <p className="font-medium text-green-900">Are you a veteran with honorable discharge?</p>
+               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="font-medium text-sm mb-2 flex items-center gap-1">
+                  <p className="font-medium text-sm mb-2 flex items-center gap-1 text-blue-900">
                     <CheckCircle className="h-4 w-4 text-green-600" /> Yes
                   </p>
                   <p className="text-xs text-blue-800 mb-2">→ You qualify for 5-point preference</p>
@@ -161,7 +161,7 @@ export default function VeteransPreferencePage() {
                   </div>
                 </div>
                 <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                  <p className="font-medium text-sm mb-2 flex items-center gap-1">
+                  <p className="font-medium text-sm mb-2 flex items-center gap-1 text-red-900">
                     <AlertCircle className="h-4 w-4 text-red-600" /> No
                   </p>
                   <p className="text-xs text-red-800">→ You do NOT qualify for veterans preference</p>
