@@ -123,7 +123,7 @@ export default function PricingPage() {
             {subscriptionPlans.map((plan) => (
               <Card 
                 key={plan.name} 
-                className={plan.highlight ? "border-primary shadow-lg relative" : plan.type === "free" ? "border-green-200 bg-green-50 relative" : "relative"}
+                className={plan.highlight ? "border-primary shadow-lg relative" : plan.type === "free" ? "border-green-200 shadow-lg relative" : "relative"}
               >
                 {plan.highlight && (
                   <Badge className="absolute -top-3 right-4" variant="default">
@@ -171,7 +171,7 @@ export default function PricingPage() {
                 </CardContent>
                 <CardFooter>
                   <Button 
-                    className={`w-full ${plan.type === "free" ? "bg-green-500 hover:bg-green-600" : ""}`} 
+                    className={`w-full`} 
                     variant={plan.highlight ? "default" : plan.type === "free" ? "default" : "outline"}
                     onClick={() => handleBuy(plan.link)}
                   >
