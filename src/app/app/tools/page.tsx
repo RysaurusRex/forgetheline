@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, MessageSquare, AlertTriangle, Lightbulb, Shield, ChevronRight } from "lucide-react"
+import { FileText, MessageSquare, AlertTriangle, Lightbulb, Shield, ChevronRight, Calendar, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const tools = [
@@ -46,6 +46,20 @@ const tools = [
     color: "bg-teal-500 hover:bg-teal-600",
     href: "/app/tools/medical-waiver",
   },
+  {
+    title: "Timeline Calculator",
+    description: "Calculate your hiring timeline based on agency, background, and veterans status",
+    icon: Calendar,
+    color: "bg-orange-500 hover:bg-orange-600",
+    href: "/app/tools/timeline-calculator",
+  },
+  {
+    title: "Veterans Preference Guide",
+    description: "How veterans preference works in federal LE hiring - 5 vs 10 point preference",
+    icon: Star,
+    color: "bg-yellow-500 hover:bg-yellow-600",
+    href: "/app/tools/veterans-preference",
+  },
 ]
 
 export default function ToolsPage() {
@@ -82,16 +96,16 @@ export default function ToolsPage() {
       </div>
 
       <div className="mt-12 p-8 bg-blue-50 rounded-lg border border-blue-200">
-        <h3 className="text-2xl font-bold mb-4">New: Insider Reality Checks</h3>
+        <h3 className="text-2xl font-bold mb-4">New: Timeline & Veterans Tools</h3>
         <p className="mb-6 text-slate-600">
-          We've added Polygraph Masterclass and Medical Waiver Guide based on extensive insider research from federal hiring processes and 2026 LE research.
+          We've added Timeline Calculator and Veterans Preference Guide based on insider research. Know exactly when you'll start and how to use your veterans preference.
         </p>
         <div className="flex gap-4 flex-wrap">
           <Button asChild>
-            <Link href="/app/tools/polygraph-masterclass">Polygraph Truth</Link>
+            <Link href="/app/tools/timeline-calculator">Timeline Calculator</Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="/app/tools/medical-waiver">Medical Waivers</Link>
+            <Link href="/app/tools/veterans-preference">Veterans Preference</Link>
           </Button>
         </div>
       </div>
