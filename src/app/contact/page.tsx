@@ -68,7 +68,10 @@ export default function ContactPage() {
       <div className="min-h-screen flex flex-col">
         <header className="border-b bg-card">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <a href="/" className="text-xl font-bold">Forge the Line</a>
+             <a href="/" className="flex items-center gap-3">
+               <img src="/logo.png" alt="Forge the Line" className="h-10 w-auto" />
+               <span className="text-xl font-bold">Forge the Line</span>
+             </a>
             <ThemeToggle />
           </div>
         </header>

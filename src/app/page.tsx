@@ -103,9 +103,7 @@ export default function LandingPage() {
       <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <Shield className="h-5 w-5 text-white" />
-            </div>
+            <img src="/logo.png" alt="Forge the Line" className="h-10 w-auto" />
             <span className="text-xl font-bold text-slate-900">Forge the Line</span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
