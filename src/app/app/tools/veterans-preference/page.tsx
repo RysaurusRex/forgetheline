@@ -1,93 +1,125 @@
 "use client"
 
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CheckCircle, AlertCircle, Star, Info } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
+import { CheckCircle, AlertCircle, Star, Info, Home, ChevronRight, ArrowRight } from "lucide-react"
 
-// Veterans Preference data based on federal regulations
+// Veterans Preference data
 const VETERANS_INFO = {
   overview: {
     title: "Veterans Preference in Federal LE",
     description: "Federal law gives hiring preference to veterans. Here's how it works.",
     points: [
-      { type: "5-Point Preference", criteria: "Active duty in war, campaign, or expedition", proof: "DD214 (Member 4 copy)" },
-      { type: "10-Point Preference", criteria: "Disabled veteran (30%+ disability rating)", proof: "DD214 + VA disability letter" },
-      { type: "Spouse/ Widow(er)", criteria: "Spouse of disabled/ deceased veteran", proof: "Marriage certificate + death/ disability proof" },
+      { type: "5-Point Preference", criteria: "Active duty in war, campaign, or expedition", proof: "DD214 (Member 4 copy)", color: "bg-blue-100 text-blue-800", icon: "🎖️" },
+      { type: "10-Point Preference", criteria: "Disabled veteran (30%+ disability rating)", proof: "DD214 + VA disability letter", color: "bg-purple-100 text-purple-800", icon: "🏅" },
+      { type: "Spouse/ Widow(er)", criteria: "Spouse of disabled/ deceased veteran", proof: "Marriage cert + death/ disability proof", color: "bg-green-100 text-green-800", icon: "💼" },
     ],
   },
   federalAgencies: [
     {
       agency: "FBI",
       preference: "Yes - 5 or 10 point",
-      howItWorks: "Veterans get preference points added to Phase I score. Can be the difference between advancing or not.",
-      insiderTip: "Insider: 'FBI Phase I is scored 0-100. Veterans get 5-10 points added. That's huge when cutoff is 70.'",
-      special: "Veterans with 10-point preference are eligible for direct hire in some cases",
+      howItWorks: "Points added to Phase I score. Can be the difference between advancing or not.",
+      insiderTip: "Phase I scored 0-100. Veterans get 5-10 points added. That's huge when cutoff is 70.",
+      special: "Veterans with 10-point eligible for direct hire in some cases",
+      color: "blue",
+      icon: "🕵️",
     },
     {
       agency: "DEA",
       preference: "Yes - 5 or 10 point",
-      howItWorks: "Same as FBI - points added to assessment score. Also get preference for location assignments.",
-      insiderTip: "Insider: 'DEA values military experience. Special Ops background is gold. They understand discipline.'",
+      howItWorks: "Points added to assessment score. Also get preference for location assignments.",
+      insiderTip: "DEA values military experience. Special Ops background is gold. They understand discipline.",
       special: "Veterans may get location preference near military bases",
+      color: "green",
+      icon: "💊",
     },
     {
       agency: "ATF",
       preference: "Yes - 5 or 10 point",
       howItWorks: "Veterans preference applies to all ATF positions including Special Agent.",
-      insiderTip: "Insider: 'ATF loves military vets. Explosives, firearms, tactical experience all transfer.'",
+      insiderTip: "ATF loves military vets. Explosives, firearms, tactical experience all transfer.",
       special: "Veterans with explosives/ EOD background fast-tracked",
+      color: "orange",
+      icon: "🔫",
     },
     {
       agency: "CBP / Border Patrol",
       preference: "Yes - Strong preference",
-      howItWorks: "Veterans get 10-point preference AND can apply up to age 40 (vs 37 for non-vets).",
-      insiderTip: "Insider: 'CBP is veteran-heavy. 40% of agents are vets. They understand military culture.'",
-      special: "Age limit waived for veterans (up to 40 instead of 37)",
+      howItWorks: "Veterans get 10-point + can apply up to age 40 (vs 37 for non-vets).",
+      insiderTip: "CBP is veteran-heavy. 40% of agents are vets. They understand military culture.",
+      special: "Age limit WAIVED for veterans (up to 40 instead of 37)",
+      color: "sky",
+      icon: "🛂",
     },
     {
       agency: "Local PD",
       preference: "Varies by department",
-      howItWorks: "Some depts give veterans 5-10 points on written exam. Others offer military pay grade.",
-      insiderTip: "Insider: 'Local PD: Veterans get 5-10 points on written. Some depts match military rank to sergeant.'",
-      special: "Many depts have veterans units or preference in promotions",
+      howItWorks: "Some depts give 5-10 points on written exam. Others offer military pay grade.",
+      insiderTip: "Local PD: Veterans get 5-10 points on written. Some depts match military rank to sergeant.",
+      special: "Many depts have veterans units or promotion preference",
+      color: "slate",
+      icon: "🚔",
     },
   ],
   myths: [
-    { myth: "Veterans automatically get hired", truth: "False. You still must pass all tests. Preference just adds points." },
-    { myth: "Only combat veterans get preference", truth: "False. Any veteran with honorable discharge qualifies for 5-point." },
-    { myth: "10-point preference means disabled", truth: "True. You need 30%+ VA disability rating for 10-point." },
-    { myth: "Veterans skip the background investigation", truth: "False. Everyone gets full background, veteran or not." },
-    { myth: "I can use veterans preference for multiple agencies", truth: "True. It applies to all federal agencies you apply to." },
+    { myth: "Veterans automatically get hired", truth: "False. You still must pass all tests. Preference just adds points.", icon: "❌" },
+    { myth: "Only combat veterans get preference", truth: "False. Any veteran with honorable discharge qualifies for 5-point.", icon: "❌" },
+    { myth: "10-point preference means disabled", truth: "True. You need 30%+ VA disability rating for 10-point.", icon: "✅" },
+    { myth: "Veterans skip the background investigation", truth: "False. Everyone gets full background, veteran or not.", icon: "❌" },
+    { myth: "I can use veterans preference for multiple agencies", truth: "True. It applies to all federal agencies you apply to.", icon: "✅" },
   ],
   documents: [
-    { doc: "DD214 (Member 4 copy)", purpose: "Proves service, discharge type, awards", when: "Always required" },
-    { doc: "VA Disability Letter", purpose: "Shows disability % for 10-point preference", when: "Only for 10-point" },
-    { doc: "Marriage Certificate", purpose: "For spouse/ widow(er) preference", when: "If claiming spouse preference" },
-    { doc: "Death Certificate + VA papers", purpose: "For widow(er) of deceased veteran", when: "If claiming widow preference" },
+    { doc: "DD214 (Member 4 copy)", purpose: "Proves service, discharge type, awards", when: "Always required", priority: "High" },
+    { doc: "VA Disability Letter", purpose: "Shows disability % for 10-point preference", when: "Only for 10-point", priority: "High" },
+    { doc: "Marriage Certificate", purpose: "For spouse/ widow(er) preference", when: "If claiming spouse", priority: "Medium" },
+    { doc: "Death Certificate + VA papers", purpose: "For widow(er) of deceased veteran", when: "If claiming widow", priority: "Medium" },
   ],
 }
 
 export default function VeteransPreferencePage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <h1 className="mb-8 text-2xl font-bold">Veterans Preference Guide</h1>
+      {/* Breadcrumb */}
+      <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+        <Link href="/app/tools" className="hover:text-foreground flex items-center gap-1">
+          <Home className="h-3 w-3" />
+          Tools
+        </Link>
+        <ChevronRight className="h-3 w-3" />
+        <span className="text-foreground">Veterans Preference</span>
+      </div>
+
+      <h1 className="mb-2 text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+        Veterans Preference Guide
+      </h1>
+      <p className="mb-8 text-muted-foreground">
+        How veterans preference works in federal LE hiring - 5 vs 10 point preference, benefits, and insider tips.
+      </p>
 
       <div className="space-y-6">
-        {/* Overview */}
-        <Card>
+        {/* Hero Overview */}
+        <Card className="hover:shadow-xl transition-shadow bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-yellow-500" />
-              <CardTitle>{VETERANS_INFO.overview.title}</CardTitle>
+              <div className="h-12 w-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+                <Star className="h-6 w-6 text-yellow-600" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl">{VETERANS_INFO.overview.title}</CardTitle>
+                <CardDescription className="text-base">{VETERANS_INFO.overview.description}</CardDescription>
+              </div>
             </div>
-            <CardDescription>{VETERANS_INFO.overview.description}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-3">
               {VETERANS_INFO.overview.points.map((point, i) => (
-                <div key={i} className="p-4 border rounded-lg">
-                  <Badge className="mb-2">{point.type}</Badge>
+                <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-105">
+                  <div className="text-2xl mb-2">{point.icon}</div>
+                  <Badge className={`mb-2 ${point.color}`}>{point.type}</Badge>
                   <p className="text-sm font-medium mb-1">{point.criteria}</p>
                   <p className="text-xs text-muted-foreground">Proof: {point.proof}</p>
                 </div>
@@ -96,32 +128,75 @@ export default function VeteransPreferencePage() {
           </CardContent>
         </Card>
 
-        {/* Agency Breakdown */}
-        <Card>
+        {/* Decision Tree */}
+        <Card className="hover:shadow-lg transition-shadow">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ArrowRight className="h-5 w-5" />
+              Veterans Preference Decision Tree
+            </CardTitle>
+            <CardDescription>Find out what preference you qualify for</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="p-4 bg-green-50 rounded-lg border border-green-200 text-center">
+                <p className="font-medium">Are you a veteran with honorable discharge?</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="font-medium text-sm mb-2">✅ Yes</p>
+                  <p className="text-xs text-muted-foreground mb-2">→ You qualify for 5-point preference</p>
+                  <div className="p-3 bg-white rounded border">
+                    <p className="text-xs font-medium">Do you have 30%+ VA disability?</p>
+                    <div className="mt-2 space-y-1">
+                      <p className="text-xs">✅ Yes → <strong>10-point preference</strong></p>
+                      <p className="text-xs">❌ No → <strong>5-point preference</strong></p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                  <p className="font-medium text-sm mb-2">❌ No</p>
+                  <p className="text-xs text-muted-foreground">→ You do NOT qualify for veterans preference</p>
+                  <p className="text-xs text-muted-foreground mt-2">But you can still apply! Many agencies hire non-veterans.</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Agency Breakdown with Visual Cards */}
+        <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <CardTitle>How It Works by Agency</CardTitle>
             <CardDescription>Veterans preference varies by agency type</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {VETERANS_INFO.federalAgencies.map((agency, i) => (
-                <div key={i} className="p-4 border rounded-lg">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium">{agency.agency}</h4>
-                    <Badge variant={agency.preference.includes("Yes") ? "default" : "secondary"}>
+                <div key={i} className="p-4 border-2 rounded-xl hover:shadow-md transition-all hover:scale-[1.02]">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-2xl mb-1">{agency.icon}</div>
+                      <h4 className="font-bold">{agency.agency}</h4>
+                    </div>
+                    <Badge className={`bg-${agency.color}-100 text-${agency.color}-800`}>
                       {agency.preference}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-2">{agency.howItWorks}</p>
-                  <p className="text-xs text-blue-600 flex items-start gap-1 mb-2">
-                    <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                    {agency.insiderTip}
-                  </p>
-                  {agency.special && (
-                    <p className="text-xs text-green-600 flex items-start gap-1">
-                      <CheckCircle className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                      {agency.special}
+                  <p className="text-sm text-muted-foreground mb-3">{agency.howItWorks}</p>
+                  <div className="p-2 bg-blue-50 rounded-lg mb-2">
+                    <p className="text-xs text-blue-700 flex items-start gap-1">
+                      <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                      {agency.insiderTip}
                     </p>
+                  </div>
+                  {agency.special && (
+                    <div className="p-2 bg-green-50 rounded-lg">
+                      <p className="text-xs text-green-700 flex items-center gap-1">
+                        <CheckCircle className="h-3 w-3" />
+                        {agency.special}
+                      </p>
+                    </div>
                   )}
                 </div>
               ))}
@@ -129,20 +204,20 @@ export default function VeteransPreferencePage() {
           </CardContent>
         </Card>
 
-        {/* Myths vs Facts */}
-        <Card>
+        {/* Myths vs Facts with Icons */}
+        <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <CardTitle>Myths vs. Facts</CardTitle>
             <CardDescription>Common misconceptions about veterans preference</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
+            <div className="grid gap-3 sm:grid-cols-2">
               {VETERANS_INFO.myths.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 border rounded-lg">
-                  <AlertCircle className="h-4 w-4 mt-0.5 text-yellow-500 flex-shrink-0" />
+                <div key={i} className="flex items-start gap-3 p-4 border rounded-xl hover:bg-muted/30 transition-colors">
+                  <span className="text-xl">{item.icon}</span>
                   <div>
                     <p className="text-sm font-medium text-red-600">{item.myth}</p>
-                    <p className="text-sm text-green-600">{item.truth}</p>
+                    <p className="text-sm text-green-600 mt-1">{item.truth}</p>
                   </div>
                 </div>
               ))}
@@ -150,40 +225,40 @@ export default function VeteransPreferencePage() {
           </CardContent>
         </Card>
 
-        {/* Required Documents */}
-        <Card>
+        {/* Required Documents with Priority */}
+        <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <CardTitle>Required Documents</CardTitle>
             <CardDescription>What you need to claim veterans preference</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="pb-2 text-left font-medium">Document</th>
-                    <th className="pb-2 text-left font-medium">Purpose</th>
-                    <th className="pb-2 text-left font-medium">When Needed</th>
-                  </tr>
-                </thead>
-                <tbody className="text-muted-foreground">
-                  {VETERANS_INFO.documents.map((doc, i) => (
-                    <tr key={i} className="border-b">
-                      <td className="py-2 font-medium">{doc.doc}</td>
-                      <td className="py-2">{doc.purpose}</td>
-                      <td className="py-2">
-                        <Badge variant="outline" className="text-xs">{doc.when}</Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="space-y-3">
+              {VETERANS_INFO.documents.map((doc, i) => (
+                <div key={i} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/30 transition-colors">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">{doc.doc}</p>
+                    <p className="text-xs text-muted-foreground">{doc.purpose}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs">{doc.when}</Badge>
+                    <Badge className={doc.priority === "High" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}>
+                      {doc.priority} Priority
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-800">
+                <strong>Pro Tip:</strong> Get your DD214 (Member 4 copy) BEFORE you apply. Don't wait until the last minute. 
+                The VA can take weeks to process requests.
+              </p>
             </div>
           </CardContent>
         </Card>
 
         {/* Gen Z Reality Check */}
-        <Card className="border-green-200 bg-green-50">
+        <Card className="border-green-200 bg-gradient-to-br from-green-50 to-emerald-50">
           <CardContent className="pt-6">
             <p className="text-sm text-green-800">
               <strong>Veterans Reality Check:</strong> "Veterans make up 30%+ of federal LE. 
