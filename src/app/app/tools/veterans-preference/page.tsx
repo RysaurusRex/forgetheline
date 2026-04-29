@@ -36,6 +36,22 @@ const VETERANS_INFO = {
       color: "green",
     },
     {
+      agency: "HSI",
+      preference: "Yes - 5 or 10 point",
+      howItWorks: "Veterans preference applies to HSI Special Agent positions. Strong hiring.",
+      insiderTip: "HSI values military intelligence, linguistics, tactical experience. Growing agency.",
+      special: "Veterans with language skills (Arabic, Chinese, Spanish) fast-tracked",
+      color: "red",
+    },
+    {
+      agency: "USPIS",
+      preference: "Yes - 5 or 10 point",
+      howItWorks: "Veterans get preference for Postal Inspector positions. Unique mission.",
+      insiderTip: "USPIS investigates mail crimes, fraud, narcotics via mail. Small but elite.",
+      special: "Veterans with law enforcement experience preferred",
+      color: "darkblue",
+    },
+    {
       agency: "ATF",
       preference: "Yes - 5 or 10 point",
       howItWorks: "Veterans preference applies to all ATF positions including Special Agent.",
