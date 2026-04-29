@@ -40,7 +40,6 @@ const subscriptionPlans = [
       "Client profile",
       "Community forum access",
       "Cancel anytime",
-      "30-day money-back guarantee",
     ],
     highlight: false,
     type: "subscription",
@@ -56,7 +55,6 @@ const subscriptionPlans = [
       "$50/month coaching credit",
       "Priority support",
       "New content drops",
-      "30-day money-back guarantee",
     ],
     highlight: true,
     type: "subscription",
@@ -72,7 +70,6 @@ const subscriptionPlans = [
       "$100/month coaching credit",
       "1-on-1 monthly call",
       "Early access to new features",
-      "30-day money-back guarantee",
     ],
     highlight: false,
     type: "subscription",
@@ -136,11 +133,9 @@ export default function PricingPage() {
                   FREE
                 </Badge>
               )}
-              {plan.features.some(f => f.includes("money-back")) && (
-                <Badge className="absolute -top-3 right-4 bg-yellow-500" variant="default">
-                  30-Day Guarantee
-                </Badge>
-              )}
+              <Badge className="absolute -top-3 right-4 bg-blue-500" variant="default">
+                Insider Approved
+              </Badge>
               <CardHeader>
                 <CardTitle className="text-2xl">{plan.name}</CardTitle>
                 <CardDescription>{plan.description}</CardDescription>
@@ -165,11 +160,7 @@ export default function PricingPage() {
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      {feature.includes("money-back") ? (
-                        <span className="text-green-600 font-medium">{feature}</span>
-                      ) : (
-                        <span>{feature}</span>
-                      )}
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
