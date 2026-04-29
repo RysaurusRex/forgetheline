@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, MessageSquare, AlertTriangle, Lightbulb, Shield, ChevronRight, Calendar, Star } from "lucide-react"
+import { FileText, MessageSquare, AlertTriangle, Lightbulb, Shield, ChevronRight, Calendar, Star, Scale } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const tools = [
@@ -60,6 +60,13 @@ const tools = [
     color: "bg-yellow-500 hover:bg-yellow-600",
     href: "/app/tools/veterans-preference",
   },
+  {
+    title: "Agency Comparison Tool",
+    description: "Compare federal and local agencies side-by-side - pay, requirements, culture, work-life",
+    icon: Scale,
+    color: "bg-purple-500 hover:bg-purple-600",
+    href: "/app/tools/agency-comparison",
+  },
 ]
 
 export default function ToolsPage() {
@@ -96,16 +103,16 @@ export default function ToolsPage() {
       </div>
 
       <div className="mt-12 p-8 bg-blue-50 rounded-lg border border-blue-200">
-        <h3 className="text-2xl font-bold mb-4">New: Timeline & Veterans Tools</h3>
+        <h3 className="text-2xl font-bold mb-4">New: Agency Comparison Tool</h3>
         <p className="mb-6 text-slate-600">
-          We've added Timeline Calculator and Veterans Preference Guide based on insider research. Know exactly when you'll start and how to use your veterans preference.
+          Compare FBI, DEA, ATF, CBP, and Local PD side-by-side. Based on OPM data, agency websites, and insider research. Find the agency that fits YOUR priorities.
         </p>
         <div className="flex gap-4 flex-wrap">
           <Button asChild>
-            <Link href="/app/tools/timeline-calculator">Timeline Calculator</Link>
+            <Link href="/app/tools/agency-comparison">Compare Agencies</Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="/app/tools/veterans-preference">Veterans Preference</Link>
+            <Link href="/app/tools/timeline-calculator">Timeline Calculator</Link>
           </Button>
         </div>
       </div>
