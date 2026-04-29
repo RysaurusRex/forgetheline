@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import { Lightbulb, Clock, CheckCircle, ArrowLeft, ArrowRight, RotateCcw } from "lucide-react"
 import Link from "next/link"
 
-// Agency-specific questions based on insider research
+// Agency-specific questions based on insider research and real interviews
 const AGENCY_QUESTIONS: Record<string, Array<{ question: string; type: string; tip: string; star?: boolean }>> = {
   fbi: [
     {
@@ -81,48 +81,200 @@ const AGENCY_QUESTIONS: Record<string, Array<{ question: string; type: string; t
       star: false,
     },
     {
-      question: "How do you handle the stress of seeing the worst of society daily?",
+      question: "Why should we hire you over other candidates?",
+      type: "Motivation",
+      tip: "Insider: 'DEA wants agents who understand the mission. Mention: 'I'm disciplined, I understand the drug crisis, I'm ready for undercover work.'",
+      star: false,
+    },
+  ],
+  hsi: [
+    {
+      question: "Why do you want to join HSI as a Special Agent?",
+      type: "Motivation",
+      tip: "Insider: 'HSI is growing fast. Mention: 'I want to fight transnational crime, human trafficking, cyber crime.' Show you understand their unique mission.'",
+      star: false,
+    },
+    {
+      question: "Describe a time you had to investigate a complex case with limited resources. What was your approach?",
       type: "Behavioral",
-      tip: "Insider: 'DEA: 'We need to know you won't burn out in 2 years. Show healthy coping mechanisms: exercise, therapy, hobbies.'",
+      tip: "Insider: 'HSI values resourcefulness. Show you can work independently, think creatively, build cases methodically.'",
       star: true,
+    },
+    {
+      question: "You discover a shipment containing counterfeit goods worth $2M. What steps do you take?",
+      type: "Situational",
+      tip: "Insider: 'HSI: 'Secure the scene, document everything, coordinate with CBP/ customs, follow chain of custody protocols.'",
+      star: false,
+    },
+    {
+      question: "HSI has language requirements. What languages do you speak and how would you use them in investigations?",
+      type: "Background",
+      tip: "Insider: 'HSI loves language skills (Spanish, Chinese, Arabic). If you have them, highlight them. If not, show willingness to learn.'",
+      star: false,
+    },
+    {
+      question: "What would you do if you suspected a cargo container had illicit goods but had no warrant?",
+      type: "Situational",
+      tip: "Insider: 'HSI: 'Know the laws. Answer: 'I'd consult with legal, get proper authorization, ensure Fourth Amendment compliance.'",
+      star: false,
+    },
+    {
+      question: "Tell us about a time you had to work with a difficult federal partner agency. How did you handle it?",
+      type: "Behavioral",
+      tip: "Insider: 'HSI partners with FBI, DEA, CBP daily. Show you can collaborate across agencies professionally.'",
+      star: true,
+    },
+  ],
+  uspis: [
+    {
+      question: "Why do you want to become a Postal Inspector?",
+      type: "Motivation",
+      tip: "Insider: 'USPIS investigates mail crimes, fraud, narcotics via mail. Mention: 'I want to protect the integrity of the U.S. Mail system.'",
+      star: false,
+    },
+    {
+      question: "Describe a time you had to investigate a suspicious package. What steps did you take?",
+      type: "Situational",
+      tip: "Insider: 'USPIS: 'Protocol matters. Secure package, document chain of custody, coordinate with postal workers, follow legal procedures.'",
+      star: false,
+    },
+    {
+      question: "You suspect someone is using the mail to commit identity theft. How do you build your case?",
+      type: "Behavioral",
+      tip: "Insider: 'USPIS loves methodical investigations. Show you document everything, follow paper trail, build evidence systematically.'",
+      star: true,
+    },
+    {
+      question: "What strategies would you use to investigate mail tampering at a large postal facility?",
+      type: "Situational",
+      tip: "Insider: 'USPIS: 'Surveillance, employee interviews, tracking systems, coordination with facility management.' Show investigative thinking.'",
+      star: false,
+    },
+    {
+      question: "Can you discuss your experience with digital forensics and how it applies to mail crime?",
+      type: "Background",
+      tip: "Insider: 'USPIS investigates cyber crimes via mail (fraud, phishing). If you have digital skills, highlight them. If not, show willingness to learn.'",
+      star: false,
+    },
+    {
+      question: "What would you do if you caught a coworker stealing mail? How do you handle the situation?",
+      type: "Situational",
+      tip: "Insider: 'USPIS: 'This is a test of integrity. Answer: 'Report immediately, document everything, follow internal affairs protocols.'",
+      star: false,
+    },
+  ],
+  atf: [
+    {
+      question: "Why do you want to be an ATF Special Agent specifically?",
+      type: "Motivation",
+      tip: "Insider: 'ATF focuses on firearms, explosives, arson. Mention: 'I want to reduce violent crime through tactical expertise and investigative work.'",
+      star: false,
+    },
+    {
+      question: "Describe a time you handled explosives or firearms in a high-pressure situation. What did you do?",
+      type: "Behavioral",
+      tip: "Insider: 'ATF loves military vets with EOD, firearms experience. If you have it, highlight it. If not, show you understand the risks.'",
+      star: true,
+    },
+    {
+      question: "You're investigating a gun trafficking ring. The trail leads to a corrupt local official. What do you do?",
+      type: "Situational",
+      tip: "Insider: 'ATF: 'Chain of command matters. Document everything, consult supervisors, follow legal protocols for public corruption cases.'",
+      star: false,
+    },
+    {
+      question: "What experience do you have with tactical operations or high-risk warrants?",
+      type: "Background",
+      tip: "Insider: 'ATF does lots of tactical work. If you're former military (especially SOF), highlight it. ATF values discipline and tactical competence.'",
+      star: false,
+    },
+    {
+      question: "How would you handle a situation where you had to secure a crime scene with explosives?",
+      type: "Situational",
+      tip: "Insider: 'ATF: 'Safety first. Evacuate area, call bomb squad, preserve evidence, coordinate with local fire/EMS. Show you think tactically.'",
+      star: false,
+    },
+    {
+      question: "Tell us about a time you had to make a split-second decision in a dangerous situation. What happened?",
+      type: "Behavioral",
+      tip: "Insider: 'ATF work is dangerous. Show you can think fast, prioritize safety, make sound decisions under pressure.'",
+      star: true,
+    },
+  ],
+  cbp: [
+    {
+      question: "Why do you want to be a CBP Officer / Border Patrol Agent?",
+      type: "Motivation",
+      tip: "Insider: 'CBP: 'I want to protect America's borders and prevent terrorism.' Mention: 'I understand the mission includes customs, immigration, and agriculture protection.'",
+      star: false,
+    },
+    {
+      question: "Describe a time you had to make a split-second decision at a border crossing. What did you do?",
+      type: "Behavioral",
+      tip: "Insider: 'CBP values quick thinking. Show you can assess threats fast, communicate clearly, follow protocols under pressure.'",
+      star: true,
+    },
+    {
+      question: "You encounter someone at the border who doesn't speak English. How do you handle the situation?",
+      type: "Situational",
+      tip: "Insider: 'CBP: 'Language barriers are common. Answer: 'Use translator app, call for backup with language skills, remain calm and professional.'",
+      star: false,
+    },
+    {
+      question: "What would you do if you found a vehicle with concealed compartments at a checkpoint?",
+      type: "Situational",
+      tip: "Insider: 'CBP: 'Secure the vehicle, call K-9 unit, document everything, follow search protocols. Show attention to detail.'",
+      star: false,
+    },
+    {
+      question: "How do you handle the stress of working 24/7 shifts, night shifts, and being away from family?",
+      type: "Behavioral",
+      tip: "Insider: 'CBP is 24/7/365. Show you understand the lifestyle, have a support system, can handle irregular schedules.'",
+      star: true,
+    },
+    {
+      question: "You witness a coworker using excessive force during a border apprehension. What do you do?",
+      type: "Situational",
+      tip: "Insider: 'CBP: 'Integrity test. Answer: 'Intervene safely, report immediately, document everything. CBP has zero tolerance for excessive force.'",
+      star: false,
     },
   ],
   local: [
     {
-      question: "Why do you want to be a police officer in THIS specific department?",
+      question: "Why do you want to be a police officer in our specific department?",
       type: "Motivation",
-      tip: "Insider: 'Research the chief's name, mission statement, recent community initiatives. Generic answers get you eliminated in round 1.'",
+      tip: "Insider: 'Research YOUR department. Mention community policing, specific programs they run, local crime issues.'",
       star: false,
     },
     {
-      question: "Tell us about yourself. Give us a 90-second summary.",
+      question: "Tell us about a time you had to de-escalate a tense situation. What did you do?",
+      type: "Behavioral",
+      tip: "Local PD: 'De-escalation is KEY. Show you can talk people down without using force.'",
+      star: true,
+    },
+    {
+      question: "You witness another officer using excessive force. What do you do?",
+      type: "Situational",
+      tip: "Insider: 'This is a test of integrity. Answer: 'Intervene to stop it, report it through proper channels, document everything.'",
+      star: false,
+    },
+    {
+      question: "Describe your experience working with diverse communities.",
       type: "Background",
-      tip: "Insider: 'Focus on education, work history, qualities that relate to police work. NOT your favorite sports teams or food.'",
+      tip: "Insider: 'Local PD values community relations. Show you understand cultural sensitivity, bias awareness.'",
       star: false,
     },
     {
-      question: "You pull over a car and find a small amount of marijuana. The driver is polite and cooperative. What do you do?",
+      question: "What would you do if you pulled over a close friend for DUI?",
       type: "Situational",
-      tip: "Insider: 'Local PD: 'We want discretion. Answer: It depends on jurisdiction, amount, suspect attitude. Show you can think, not just follow script.'",
+      tip: "Insider: 'Answer: 'I'd treat them like any other citizen. Integrity over friendship. I'd arrest if warranted.'",
       star: false,
     },
     {
-      question: "Describe a time you showed leadership or teamwork in a difficult situation.",
-      type: "Behavioral",
-      tip: "Insider: 'Use STAR method. Local PD loves teamwork. Show you're not a lone wolf - they need officers who work well with partners.'",
-      star: true,
-    },
-    {
-      question: "What would you do if you witnessed another officer using excessive force?",
-      type: "Situational",
-      tip: "Insider: 'This is a test. Answer: 'Intervene to stop it, report it immediately, document everything. Local PD has zero tolerance for brutality.'",
+      question: "Why are you the best candidate for our department?",
+      type: "Motivation",
+      tip: "Insider: 'Mention your stability, community ties, understanding of local issues. Local PD wants someone who'll stay 20+ years.'",
       star: false,
-    },
-    {
-      question: "How do you plan to maintain work-life balance in a job known for burnout?",
-      type: "Behavioral",
-      tip: "Insider: 'Gen Z: 77% prioritize work-life balance. Show you have hobbies, support system, and boundaries. But also show commitment.'",
-      star: true,
     },
   ],
 }
