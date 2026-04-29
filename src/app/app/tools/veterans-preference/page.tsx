@@ -46,15 +46,15 @@ const VETERANS_INFO = {
       color: "orange",
       icon: "🔫",
     },
-    {
-      agency: "CBP / Border Patrol",
-      preference: "Yes - Strong preference",
-      howItWorks: "Veterans get 10-point + can apply up to age 40 (vs 37 for non-vets).",
-      insiderTip: "CBP is veteran-heavy. 40% of agents are vets. They understand military culture.",
-      special: "Age limit WAIVED for veterans (up to 40 instead of 37)",
-      color: "sky",
-      icon: "🛂",
-    },
+      {
+        agency: "CBP / Border Patrol",
+        preference: "Yes - Strong preference",
+        howItWorks: "Veterans get 10-point + can apply up to age 40 (vs 37 for non-vets).",
+        insiderTip: "CBP is veteran-heavy. 40% of agents are vets. They understand military culture.",
+        special: "Age limit WAIVED for veterans (up to 40 instead of 37)",
+        color: "blue",
+        icon: "🛂",
+      },
     {
       agency: "Local PD",
       preference: "Varies by department",
@@ -93,7 +93,7 @@ export default function VeteransPreferencePage() {
         <span className="text-foreground">Veterans Preference</span>
       </div>
 
-      <h1 className="mb-2 text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+      <h1 className="mb-2 text-3xl font-bold text-yellow-700">
         Veterans Preference Guide
       </h1>
       <p className="mb-8 text-muted-foreground">
@@ -179,7 +179,7 @@ export default function VeteransPreferencePage() {
                       <div className="text-2xl mb-1">{agency.icon}</div>
                       <h4 className="font-bold">{agency.agency}</h4>
                     </div>
-                    <Badge className={`bg-${agency.color}-100 text-${agency.color}-800`}>
+                    <Badge className={`bg-${agency.color}-100 text-${agency.color}-800 font-medium`}>
                       {agency.preference}
                     </Badge>
                   </div>
