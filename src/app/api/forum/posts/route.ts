@@ -14,7 +14,11 @@ export async function GET() {
         select: { comments: true },
       },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: [
+      { pinned: "desc" },
+      { upvotes: "desc" },
+      { createdAt: "desc" },
+    ],
   })
 
   return NextResponse.json(posts)
@@ -35,6 +39,8 @@ export async function POST(req: NextRequest) {
       title,
       content,
       category,
+      solved: false,
+      upvotes: 0,
     },
   })
 
