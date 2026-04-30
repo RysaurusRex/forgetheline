@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MessageSquare, Plus, Pin, User, Clock, Search, ThumbsUp, CheckCircle } from "lucide-react"
+import { MessageSquare, Plus, Pin, User, Clock, Search, ThumbsUp, CheckCircle, Shield } from "lucide-react"
 import Link from "next/link"
 
 const CATEGORIES = [
@@ -266,6 +266,12 @@ export default function ForumPage() {
                       <CardDescription className="flex items-center gap-2">
                         <Clock className="h-3 w-3" />
                         {formatDate(post.createdAt)} · {post.user.name || post.user.email}
+                        {post.user.verifiedInsider && (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-medium">
+                            <Shield className="h-3 w-3" />
+                            Verified Insider
+                          </span>
+                        )}
                       </CardDescription>
                     </div>
                     <div className="flex items-center gap-3">
