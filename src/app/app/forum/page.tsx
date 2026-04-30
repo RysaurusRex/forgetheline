@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MessageSquare, Plus, Pin, User, Clock, Search } from "lucide-react"
+import { MessageSquare, Plus, Pin, User, Clock, Search, ThumbsUp, CheckCircle } from "lucide-react"
 import Link from "next/link"
 
 const CATEGORIES = [
@@ -95,7 +95,33 @@ export default function ForumPage() {
     setSubmitting(false)
   }
 
+  const handleUpvote = async (postId: string) => {
+    if (!session) return
+    const res = await fetch(`/api/forum/posts/${postId}/upvote`, {
+      method: "POST",
+    })
+    if (res.ok) {
+      fetchPosts()
+    }
+  }
+
+  const handleSolved = async (postId: string) => {
+    if (!session) return
+    const res = await fetch(`/api/forum/posts/${postId}/solved`, {
+      method: "POST",
+    })
+    if (res.ok) {
+      fetchPosts()
+    }
+  }
+
   const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    })
+  }
     return new Date(dateStr).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -224,10 +250,16 @@ export default function ForumPage() {
                     <div className="space-y-1">
                       <CardTitle className="flex items-center gap-2 text-lg">
                         {post.pinned && <Pin className="h-4 w-4 text-primary" />}
+                        {post.solved && <CheckCircle className="h-4 w-4 text-green-500" />}
                         {post.title}
                         {AGENCY_COLORS[post.category] && (
                           <span className="text-xs px-2 py-1 rounded bg-white/50 font-medium">
                             {post.category}
+                          </span>
+                        )}
+                        {post.solved && (
+                          <span className="text-xs px-2 py-1 rounded bg-green-100 text-green-700 font-medium">
+                            Solved
                           </span>
                         )}
                       </CardTitle>
@@ -236,14 +268,37 @@ export default function ForumPage() {
                         {formatDate(post.createdAt)} · {post.user.name || post.user.email}
                       </CardDescription>
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <MessageSquare className="h-4 w-4" />
-                      {post._count.comments}
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleUpvote(post.id)
+                        }}
+                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-blue-600 transition-colors"
+                      >
+                        <ThumbsUp className="h-4 w-4" />
+                        {post.upvotes}
+                      </button>
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <MessageSquare className="h-4 w-4" />
+                        {post._count.comments}
+                      </div>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm whitespace-pre-wrap text-muted-foreground">{post.content.substring(0, 200)}...</p>
+                  {session && (
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleSolved(post.id)
+                      }}
+                      className="mt-4 text-xs px-3 py-1 rounded bg-green-50 text-green-700 hover:bg-green-100 transition-colors"
+                    >
+                      Mark as {post.solved ? "Unsolved" : "Solved"}
+                    </button>
+                  )}
                 </CardContent>
               </Card>
             </Link>
