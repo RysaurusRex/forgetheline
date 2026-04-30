@@ -12,8 +12,8 @@ const features = [
     color: "bg-blue-500 hover:bg-blue-600",
   },
   {
-    title: "Interview Simulator",
-    description: "Practice with realistic questions modeled after actual hiring interviews",
+    title: "Oral Board Simulator",
+    description: "Practice with FBI, DEA, HSI, ATF, CBP & Local PD questions",
     icon: MessageSquare,
     color: "bg-emerald-500 hover:bg-emerald-600",
   },
@@ -24,10 +24,22 @@ const features = [
     color: "bg-amber-500 hover:bg-amber-600",
   },
   {
-    title: "Strategy Engine",
-    description: "Build a personalized roadmap based on your goals and timeline",
+    title: "Agency Comparison",
+    description: "Compare FBI, DEA, HSI, ATF, CBP & Local PD side-by-side",
     icon: Lightbulb,
     color: "bg-violet-500 hover:bg-violet-600",
+  },
+  {
+    title: "Timeline Calculator",
+    description: "Visual timeline for FBI, DEA, HSI, ATF, CBP & Local hiring processes",
+    icon: TrendingUp,
+    color: "bg-cyan-500 hover:bg-cyan-600",
+  },
+  {
+    title: "Veterans Preference",
+    description: "5 or 10-point preference calculator + insider tips for all agencies",
+    icon: Shield,
+    color: "bg-indigo-500 hover:bg-indigo-600",
   },
   {
     title: "Polygraph Masterclass",
@@ -55,6 +67,8 @@ const testimonials = [
   { name: "Maria S.", location: "CA", text: "Got hired by LAPD after using the Interview Simulator. The insider tips helped me nail every question.", rating: 5 },
   { name: "Michael T.", location: "TX", text: "The Agency Comparison Tool helped me choose CBP over FBI. Smartest career decision I ever made.", rating: 5 },
   { name: "Sarah K.", location: "FL", text: "Went from 15:30 to 13:45 on my 1.5 mile run using the 8-week training plan. Hired by DEA!", rating: 5 },
+  { name: "James R.", location: "AZ", text: "HSI hired me after using the Timeline Calculator. Knowing the 8-14 month timeline helped me plan perfectly.", rating: 5 },
+  { name: "Lisa M.", location: "IL", text: "ATF's fitness test was tough, but the training plan got me ready. Passed on my first try!", rating: 5 },
 ]
 
   const insiderInsights = [
@@ -136,7 +150,7 @@ export default function LandingPage() {
             </span>
           </h1>
           <p className="mt-8 text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Practice with real insider questions. Get hired by the FBI, DEA, or Local PD. 
+            Practice with real insider questions. Get hired by the FBI, DEA, HSI, ATF, CBP, or Local PD. 
             Join 500+ candidates who aced their interviews and landed the job.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
@@ -224,10 +238,10 @@ export default function LandingPage() {
                       </svg>
                     ))}
                   </div>
-                  <p className="text-slate-600 mb-6 leading-relaxed">"{testimonial.quote}"</p>
+                  <p className="text-slate-600 mb-6 leading-relaxed">"{testimonial.text}"</p>
                   <div>
                     <div className="font-bold text-slate-900">{testimonial.name}</div>
-                    <div className="text-sm text-slate-500">{testimonial.role}</div>
+                    <div className="text-sm text-slate-500">{testimonial.location}</div>
                   </div>
                 </CardContent>
               </Card>
@@ -275,37 +289,6 @@ export default function LandingPage() {
             <Button asChild variant="outline">
               <Link href="/app/tools/polygraph-masterclass">See Polygraph Truth</Link>
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-24 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-3xl font-bold text-center mb-4">What Our Candidates Say</h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what candidates say about landing their dream jobs.
-          </p>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {testimonials.map((t, i) => (
-              <div key={i} className="p-6 bg-slate-50 rounded-2xl border hover:shadow-lg transition-all hover:scale-[1.02]">
-                <div className="flex items-center gap-1 mb-3">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                  ))}
-                </div>
-                <p className="text-sm text-gray-700 mb-4">"{t.text}"</p>
-                <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-sm font-bold text-blue-700">
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{t.name}</p>
-                    <p className="text-xs text-gray-500">{t.location}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
