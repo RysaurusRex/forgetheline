@@ -6,16 +6,32 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { MessageSquare, Plus, Pin, User, Clock } from "lucide-react"
+import { MessageSquare, Plus, Pin, User, Clock, Search } from "lucide-react"
+import Link from "next/link"
 
 const CATEGORIES = [
   "General",
+  "FBI",
+  "DEA", 
+  "HSI",
+  "ATF",
+  "CBP",
+  "Local PD",
   "Resume Help",
   "Interview Tips",
   "Background Check",
   "Physical Test",
   "Career Advice",
 ]
+
+const AGENCY_COLORS: Record<string, string> = {
+  "FBI": "border-blue-500 bg-blue-50",
+  "DEA": "border-green-500 bg-green-50",
+  "HSI": "border-red-500 bg-red-50",
+  "ATF": "border-orange-500 bg-orange-50",
+  "CBP": "border-sky-500 bg-sky-50",
+  "Local PD": "border-slate-500 bg-slate-50",
+}
 
 interface Post {
   id: string
@@ -40,6 +56,15 @@ export default function ForumPage() {
   const [showForm, setShowForm] = useState(false)
   const [newPost, setNewPost] = useState({ title: "", content: "", category: "General" })
   const [submitting, setSubmitting] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("All")
+
+  const filteredPosts = posts.filter(post => {
+    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         post.content.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory
+    return matchesSearch && matchesCategory
+  })
 
   useEffect(() => {
     fetchPosts()
@@ -102,6 +127,26 @@ export default function ForumPage() {
         )}
       </div>
 
+      {/* Search and Filter */}
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <Input
+          placeholder="Search posts..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="md:w-1/3"
+        />
+        <select
+          className="rounded-md border bg-background px-3 py-2 text-sm md:w-48"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="All">All Categories</option>
+          {CATEGORIES.map((cat) => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
+      </div>
+
       {showForm && session && (
         <Card className="mb-8">
           <CardHeader>
@@ -160,25 +205,35 @@ export default function ForumPage() {
       )}
 
       <div className="space-y-4">
-        {posts.length === 0 ? (
+        {filteredPosts.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground">No posts yet. Be the first to post!</p>
+              <p className="text-muted-foreground">No posts found. Try a different search or category.</p>
             </CardContent>
           </Card>
         ) : (
-          posts.map((post) => (
+          filteredPosts.map((post) => (
             <Link key={post.id} href={`/app/forum/${post.id}`}>
-              <Card className={post.pinned ? "border-primary cursor-pointer hover:shadow-md transition-shadow" : "cursor-pointer hover:shadow-md transition-shadow"}>
+              <Card className={`cursor-pointer hover:shadow-md transition-shadow ${
+                post.pinned ? "border-primary" : 
+                AGENCY_COLORS[post.category] ? AGENCY_COLORS[post.category] :
+                "border-border"
+              }`}>
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="space-y-1">
                       <CardTitle className="flex items-center gap-2 text-lg">
                         {post.pinned && <Pin className="h-4 w-4 text-primary" />}
                         {post.title}
+                        {AGENCY_COLORS[post.category] && (
+                          <span className="text-xs px-2 py-1 rounded bg-white/50 font-medium">
+                            {post.category}
+                          </span>
+                        )}
                       </CardTitle>
-                      <CardDescription>
-                        {post.category} · {post.user.name || post.user.email} · {formatDate(post.createdAt)}
+                      <CardDescription className="flex items-center gap-2">
+                        <Clock className="h-3 w-3" />
+                        {formatDate(post.createdAt)} · {post.user.name || post.user.email}
                       </CardDescription>
                     </div>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -188,7 +243,7 @@ export default function ForumPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm whitespace-pre-wrap">{post.content.substring(0, 200)}...</p>
+                  <p className="text-sm whitespace-pre-wrap text-muted-foreground">{post.content.substring(0, 200)}...</p>
                 </CardContent>
               </Card>
             </Link>
